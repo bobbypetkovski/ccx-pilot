@@ -1,908 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Duzlo × Bobby — Onboarding</title>
+<title>Survey Recruitment Pilot</title>
+<meta name="description" content="Survey recruitment pilot proposal, prepared for ConsumerCentriX.">
+<meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('ccx_theme');
+      document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+    } catch (e) {}
+  })();
+</script>
 <style>
-  :root{
-    --paper:#E7E9E1;
-    --paper-2:#DDE0D6;
-    --ink:#20261A;
-    --ink-soft:#5C6553;
-    --rule:#C2C7B6;
-    --signal:#2B49C9;
-    --signal-soft:#DDE2F8;
-    --warn:#9A5B18;
-    --ok:#3F6B36;
+:root{
+  --bg:#FBFBFC; --surface:#FFFFFF; --surface-2:#F5F6F8;
+  --border:#E3E5EA; --border-strong:#CFD3DA;
+  --text:#191B1F; --text-2:#5A6069; --text-3:#8A9099;
+  --accent:#2F5D8A; --accent-soft:#EAF0F6;
+  --ok:#3B7A4E; --ok-soft:#E9F2EB;
+  --warn:#9A6B12; --warn-soft:#F7F0E2;
+  --stop:#A8443A; --stop-soft:#F7EAE8;
+  --radius:8px;
+  --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1113; --surface:#16191C; --surface-2:#1C2024;
+    --border:#272B31; --border-strong:#353A42;
+    --text:#E9EBEE; --text-2:#A3AAB4; --text-3:#767D87;
+    --accent:#7FB0DC; --accent-soft:#182634;
+    --ok:#7FBE92; --ok-soft:#16241A;
+    --warn:#D9AE5F; --warn-soft:#2A2113;
+    --stop:#DE8B80; --stop-soft:#2B1917;
   }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1113; --surface:#16191C; --surface-2:#1C2024;
+  --border:#272B31; --border-strong:#353A42;
+  --text:#E9EBEE; --text-2:#A3AAB4; --text-3:#767D87;
+  --accent:#7FB0DC; --accent-soft:#182634;
+  --ok:#7FBE92; --ok-soft:#16241A;
+  --warn:#D9AE5F; --warn-soft:#2A2113;
+  --stop:#DE8B80; --stop-soft:#2B1917;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--sans);font-size:14.5px;line-height:1.6;font-weight:400;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:980px;margin:0 auto;padding-inline:20px}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.011em;text-wrap:balance}
+h1{font-size:22px;line-height:1.3}
+h2{font-size:17px;line-height:1.35}
+h3{font-size:14px;line-height:1.4}
+p{margin:0}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto;}
-    *{transition:none !important;}
-  }
+/* ---------- header ---------- */
+header.top{
+  position:sticky;top:0;z-index:30;background:var(--surface);
+  border-bottom:1px solid var(--border);
+}
+.top-in{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-block:12px}
+.brand{display:flex;flex-direction:column;gap:1px;margin-right:auto;min-width:0}
+.brand .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--text-3)}
+.prog{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12px;color:var(--text-2);white-space:nowrap}
+.today{font-family:var(--mono);font-size:11.5px;color:var(--text-3);white-space:nowrap;display:flex;align-items:center;gap:7px}
+.today b{font-weight:400;color:var(--text-2)}
+.today .day{background:var(--accent-soft);color:var(--accent);border-radius:20px;padding:2px 8px}
+.today .idle{background:var(--warn-soft);color:var(--warn);border-radius:20px;padding:2px 8px}
+.bar{width:96px;height:5px;border-radius:3px;background:var(--surface-2);border:1px solid var(--border);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);width:0}
+.whoami,.themeBtn{
+  font-family:var(--mono);font-size:11.5px;color:var(--text-2);background:var(--surface-2);
+  border:1px solid var(--border);border-radius:20px;padding:4px 10px;cursor:pointer;
+}
+.whoami:hover,.themeBtn:hover{color:var(--text);border-color:var(--border-strong)}
+.themeBtn{display:inline-flex;align-items:center;gap:6px;flex:none}
+.themeBtn .g{font-size:12px;line-height:1}
+.whoami{display:inline-flex;align-items:center;gap:7px;flex:none}
 
-  body{
-    margin:0;background:var(--paper);color:var(--ink);
-    font-family:"Newsreader",Georgia,serif;
-    font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;
-  }
+/* avatars */
+.av{
+  flex:none;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;
+  justify-content:center;font-family:var(--mono);font-size:9.5px;font-weight:500;
+  color:#fff;letter-spacing:.02em;
+}
+.av.sm{width:17px;height:17px;font-size:8.5px}
+.chip.own{display:inline-flex;align-items:center;gap:5px;padding:2px 8px 2px 3px;min-width:0}
+.chip.own.none{padding-left:8px}
 
-  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+/* for-you strip */
+.mine{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  background:var(--accent-soft);border:1px solid var(--border);border-radius:var(--radius);
+  padding:10px 14px;margin-bottom:16px;font-size:13px;
+}
+.mine b{font-weight:500}
+.mine .pill{
+  font-family:var(--mono);font-size:11px;background:var(--surface);border:1px solid var(--border);
+  border-radius:20px;padding:2px 9px;color:var(--text-2);
+}
+.mine .go{font-family:var(--mono);font-size:11.5px;color:var(--accent);margin-left:auto}
+.mine .only{
+  font-family:var(--mono);font-size:11px;border:1px solid var(--border);background:var(--surface);
+  border-radius:20px;padding:3px 10px;color:var(--text-2);flex:none;
+}
+.mine .only:hover{border-color:var(--border-strong);color:var(--text)}
+.mine .only[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:transparent}
+.filtered .sec-h .sub{display:none}
+.empty-note{font-size:13px;color:var(--text-3);padding:6px 0}
 
-  .bar{
-    position:sticky;top:0;z-index:50;
-    background:rgba(231,233,225,.94);backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--rule);
-  }
-  .bar-in{
-    max-width:1180px;margin:0 auto;padding:12px 28px;
-    display:flex;align-items:center;gap:18px;flex-wrap:wrap;
-  }
-  .bar-name{font-family:"Archivo",system-ui,sans-serif;font-weight:800;font-size:14px;letter-spacing:-.01em;display:flex;align-items:center;gap:9px;}
-  .mark{
-    display:block;width:26px;height:26px;
-    border-radius:5px;flex:0 0 26px;
-  }
-  .bar-name .x{color:var(--ink-soft);font-weight:500;}
-  .bar-track{flex:1;min-width:140px;height:6px;background:var(--paper-2);border-radius:99px;overflow:hidden;}
-  .bar-fill{height:100%;width:0%;background:var(--signal);border-radius:99px;transition:width .35s cubic-bezier(.4,0,.2,1);}
-  .bar-count{font-family:"Archivo",system-ui,sans-serif;font-size:13px;font-weight:500;color:var(--ink-soft);font-variant-numeric:tabular-nums;}
+/* mentions */
+.mention{
+  background:var(--accent-soft);color:var(--accent);border-radius:4px;
+  padding:0 3px;font-weight:500;white-space:nowrap;
+}
+.mention.self{background:var(--warn-soft);color:var(--warn)}
+.mbtn{
+  font-family:var(--mono);font-size:11px;color:var(--text-3);border:1px solid var(--border);
+  background:var(--surface-2);border-radius:20px;padding:2px 8px;margin-top:6px;
+}
+.mbtn:hover{color:var(--accent);border-color:var(--border-strong)}
 
-  .hero{padding:88px 0 56px;border-bottom:1px solid var(--rule);}
-  .hero-grid{
-    display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);
-    gap:56px;align-items:center;
-  }
-  .hero h1{
-    font-family:"Archivo",system-ui,sans-serif;font-weight:800;
-    font-size:clamp(38px,5.4vw,72px);line-height:.95;letter-spacing:-.035em;
-    margin:0 0 26px;max-width:15ch;
-  }
-  .hero p{max-width:52ch;font-size:19px;line-height:1.55;color:var(--ink-soft);margin:0;}
+/* team */
+.team{display:flex;flex-direction:column;gap:2px}
+.member{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.member:last-of-type{border-bottom:none}
+.member .nm{flex:1;padding:1px 3px;border-radius:4px}
+.member .nm:hover{background:var(--surface-2)}
+.member .nm:focus{background:var(--surface-2);outline:1px solid var(--border-strong)}
+.member .tag{font-family:var(--mono);font-size:11px;color:var(--text-3)}
+.member .isme{font-family:var(--mono);font-size:10.5px;background:var(--ok-soft);color:var(--ok);border-radius:20px;padding:2px 8px}
+.member .setme{font-family:var(--mono);font-size:10.5px;color:var(--text-3);border:1px solid var(--border);border-radius:20px;padding:2px 8px}
+.member .setme:hover{color:var(--accent)}
 
-  /* ---------- clip fan ---------- */
-  .clips{
-    display:flex;justify-content:center;align-items:flex-end;
-    gap:14px;padding:10px 0;
-  }
-  .clip{
-    position:relative;flex:1 1 0;max-width:150px;
-    aspect-ratio:9/14;border-radius:10px;overflow:hidden;
-    background:#111;
-    box-shadow:0 10px 26px rgba(32,38,26,.22);
-  }
-  .clip:nth-child(1){transform:rotate(-4deg) translateY(10px);}
-  .clip:nth-child(2){transform:translateY(-10px);z-index:2;}
-  .clip:nth-child(3){transform:rotate(4deg) translateY(10px);}
-  .clip img{
-    width:100%;height:100%;object-fit:cover;display:block;
-  }
-  .clip figcaption{
-    position:absolute;left:8px;bottom:8px;
-    background:rgba(0,0,0,.72);color:#fff;
-    font-family:"Archivo",system-ui,sans-serif;
-    font-size:12px;font-weight:700;letter-spacing:-.01em;
-    padding:4px 8px;border-radius:99px;
-    display:flex;align-items:center;gap:5px;
-  }
-  .clip figcaption:before{
-    content:"";width:0;height:0;
-    border-left:6px solid #fff;
-    border-top:4px solid transparent;
-    border-bottom:4px solid transparent;
-  }
-  .clips-note{
-    text-align:center;font-size:13px;color:var(--ink-soft);
-    margin:16px 0 0;font-family:"Archivo",system-ui,sans-serif;font-weight:500;
-  }
+/* activity filter */
+.afilter{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+.afilter button{
+  font-family:var(--mono);font-size:10.5px;border:1px solid var(--border);border-radius:20px;
+  padding:3px 9px;color:var(--text-3);background:var(--surface-2);
+}
+.afilter button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);border-color:transparent}
 
-  @media(max-width:900px){
-    .hero{padding:64px 0 48px;}
-    .hero-grid{grid-template-columns:1fr;gap:44px;}
-    .clip{max-width:126px;}
-  }
-  @media (prefers-reduced-motion: reduce){
-    .clip:nth-child(1),.clip:nth-child(2),.clip:nth-child(3){transform:none;}
-  }
+/* ---------- login ---------- */
+#gateScreen{
+  position:fixed;inset:0;z-index:100;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+}
+#gateScreen[hidden]{display:none!important}
+.login{
+  width:100%;max-width:352px;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:26px 24px;
+}
+.login .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--text-3)}
+.login h2{margin:6px 0 3px}
+.login .sub{font-size:13px;color:var(--text-2);margin-bottom:20px}
+.login label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:5px}
+.login input{
+  width:100%;font:inherit;font-size:14px;padding:9px 11px;margin-bottom:14px;
+  background:var(--surface-2);color:var(--text);
+  border:1px solid var(--border);border-radius:6px;
+}
+.login input:focus{outline:none;border-color:var(--accent);background:var(--surface)}
+.login button.go{
+  width:100%;background:var(--accent);color:#fff;border-radius:6px;padding:10px;
+  font-size:14px;font-weight:500;
+}
+.login button.go:hover{filter:brightness(1.08)}
+.login button.go:disabled{opacity:.6;cursor:default}
+.login .err{font-size:12.5px;color:var(--stop);margin-bottom:12px;min-height:16px}
+.login .alt{font-size:12px;color:var(--text-3);margin-top:16px;text-align:center;line-height:1.5}
+.login .alt button{color:var(--accent);text-decoration:underline;text-underline-offset:2px;font-size:12px}
+.signout{font-family:var(--mono);font-size:10.5px;color:var(--text-3)}
+.signout:hover{color:var(--stop)}
+.gate{
+  display:flex;align-items:center;gap:10px;background:var(--surface-2);
+  border:1px solid var(--border);border-radius:var(--radius);padding:6px 10px;
+}
+.gate .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3)}
+.sw{
+  position:relative;width:38px;height:21px;border-radius:12px;background:var(--border-strong);
+  border:none;cursor:pointer;flex:none;transition:background .16s;
+}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform .16s}
+.sw[aria-checked="true"]{background:var(--ok)}
+.sw[aria-checked="true"]::after{transform:translateX(17px)}
+.gate .val{font-size:12.5px;font-weight:500;white-space:nowrap}
+.gate input[type=date]{
+  font:inherit;font-size:12.5px;background:transparent;border:none;color:var(--text);
+  font-family:var(--mono);padding:0;
+}
 
-  section{padding:60px 0;border-bottom:1px solid var(--rule);}
-  section:last-of-type{border-bottom:none;}
+/* ---------- timeline ---------- */
+.rail{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--surface);margin-block:22px}
+.rail .st{flex:1;min-width:0;padding:11px 14px;border-right:1px solid var(--border)}
+.rail .st:last-child{border-right:none}
+.rail .st.now{background:var(--accent-soft);box-shadow:inset 0 2px 0 var(--accent)}
+.rail .st.past{opacity:.58}
+.rail .st.late .d{color:var(--warn)}
+.rail .st .n{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--text-3);display:block}
+.rail .st .t{font-size:13px;font-weight:500;display:block;margin-top:2px}
+.rail .st .d{font-family:var(--mono);font-size:11px;color:var(--text-2);display:block;margin-top:1px}
+@media(max-width:720px){.rail{flex-direction:column}.rail .st{border-right:none;border-bottom:1px solid var(--border)}}
 
-  h2{
-    font-family:"Archivo",system-ui,sans-serif;font-weight:800;
-    font-size:clamp(26px,3.6vw,38px);letter-spacing:-.03em;line-height:1.08;
-    margin:0 0 10px;max-width:20ch;
-  }
-  .lede{font-size:19px;color:var(--ink-soft);max-width:60ch;margin:0 0 34px;}
-  h3{font-family:"Archivo",system-ui,sans-serif;font-weight:600;font-size:17px;letter-spacing:-.01em;margin:34px 0 12px;}
-  p{max-width:66ch;}
+/* ---------- sections ---------- */
+section{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  margin-bottom:16px;overflow:hidden;
+}
+.sec-h{display:flex;align-items:baseline;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.sec-h .idx{font-family:var(--mono);font-size:11px;color:var(--text-3);flex:none}
+.sec-h .sub{font-size:12.5px;color:var(--text-2);margin-left:auto}
+.sec-b{padding:6px 18px 18px}
 
-  ul.plain{list-style:none;padding:0;margin:0 0 18px;max-width:66ch;}
-  ul.plain li{padding:9px 0 9px 22px;position:relative;border-bottom:1px solid var(--rule);}
-  ul.plain li:before{content:"";position:absolute;left:2px;top:19px;width:7px;height:1.5px;background:var(--ink-soft);}
+.step{border-top:1px solid var(--border);padding-block:16px}
+.step:first-child{border-top:none}
+.step-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.step-h .num{font-family:var(--mono);font-size:11px;color:var(--accent);flex:none}
+.step-when{font-family:var(--mono);font-size:11px;color:var(--text-3);margin-left:auto}
+.grp{margin-top:14px}
+.grp-t{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:4px}
 
-  /* editable ICP list */
-  .icp{list-style:none;padding:0;margin:0 0 14px;max-width:70ch;}
-  .icp li{
-    display:flex;gap:12px;align-items:flex-start;
-    padding:4px 0;border-bottom:1px solid var(--rule);
-  }
-  .icp .dash{flex:0 0 auto;padding-top:12px;}
-  .icp .dash:before{content:"";display:block;width:7px;height:1.5px;background:var(--ink-soft);}
-  .icp .txt{
-    flex:1;font-family:"Newsreader",Georgia,serif;font-size:17px;line-height:1.6;
-    color:var(--ink);background:transparent;border:none;padding:9px 6px;
-    border-radius:2px;resize:none;overflow:hidden;min-height:1.6em;
-  }
-  .icp .txt:hover{background:var(--paper-2);}
-  .icp .txt:focus{outline:2px solid var(--signal);outline-offset:0;background:var(--paper-2);}
-  .icp .del{
-    flex:0 0 auto;background:none;border:none;cursor:pointer;
-    color:var(--ink-soft);font-size:20px;line-height:1;padding:9px 6px;
-    font-family:"Archivo",system-ui,sans-serif;
-  }
-  .icp .del:hover{color:var(--warn);}
-  .icp .del:focus-visible{outline:2px solid var(--signal);outline-offset:1px;}
-  .add{
-    font-family:"Archivo",system-ui,sans-serif;font-size:14px;font-weight:600;
-    background:none;border:1.5px dashed var(--rule);color:var(--ink-soft);
-    padding:9px 16px;border-radius:3px;cursor:pointer;
-  }
-  .add:hover{border-color:var(--signal);color:var(--signal);border-style:solid;}
+/* ---------- task rows ---------- */
+.row{display:flex;align-items:flex-start;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)}
+.row:last-of-type{border-bottom:none}
+.cb{
+  flex:none;width:15px;height:15px;margin-top:4px;border-radius:4px;border:1.5px solid var(--border-strong);
+  background:var(--surface);cursor:pointer;position:relative;
+}
+.cb[aria-checked="true"]{background:var(--ok);border-color:var(--ok)}
+.cb[aria-checked="true"]::after{
+  content:"";position:absolute;left:4px;top:1px;width:4px;height:8px;
+  border:solid #fff;border-width:0 1.6px 1.6px 0;transform:rotate(42deg);
+}
+.tx{flex:1;min-width:0;padding:1px 2px;border-radius:4px}
+.tx[contenteditable]:hover{background:var(--surface-2)}
+.tx[contenteditable]:focus{background:var(--surface-2);outline:1px solid var(--border-strong)}
+.row.done .tx{color:var(--text-3);text-decoration:line-through;text-decoration-color:var(--border-strong)}
+.chip{
+  flex:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.02em;
+  padding:2px 7px;border-radius:20px;border:1px solid var(--border);
+  background:var(--surface-2);color:var(--text-2);cursor:pointer;white-space:nowrap;margin-top:2px;
+}
+.chip.s-prog{background:var(--warn-soft);color:var(--warn);border-color:transparent}
+.chip.s-done{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.chip.s-block{background:var(--stop-soft);color:var(--stop);border-color:transparent}
+.chip.own{min-width:44px;text-align:center}
+.del{flex:none;color:var(--text-3);font-size:15px;line-height:1;padding:3px 4px;margin-top:2px;opacity:0;border-radius:4px}
+.row:hover .del,.del:focus-visible{opacity:1}
+.del:hover{color:var(--stop);background:var(--stop-soft)}
+.add{
+  font-family:var(--mono);font-size:11.5px;color:var(--text-3);padding:6px 2px;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.add:hover{color:var(--accent)}
 
-  .weeks{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);}
-  .week{background:var(--paper);padding:24px 24px 24px 22px;display:grid;grid-template-columns:64px 1fr;gap:20px;align-items:start;}
-  .week-n{font-family:"Archivo",system-ui,sans-serif;font-weight:800;font-size:15px;letter-spacing:-.01em;color:var(--signal);padding-top:3px;}
-  .week h4{font-family:"Archivo",system-ui,sans-serif;font-weight:600;font-size:18px;letter-spacing:-.015em;margin:0 0 10px;}
-  .week ul{margin:0;padding-left:17px;max-width:62ch;}
-  .week li{margin-bottom:7px;}
-  .out{display:inline-block;margin-top:6px;background:var(--signal-soft);color:var(--signal);font-family:"Archivo",system-ui,sans-serif;font-size:13px;font-weight:600;padding:4px 10px;border-radius:3px;}
-  @media(max-width:620px){.week{grid-template-columns:1fr;gap:6px;}}
+.out{
+  margin-top:12px;padding:8px 12px;background:var(--surface-2);border-left:2px solid var(--accent);
+  border-radius:0 4px 4px 0;font-size:13px;color:var(--text-2);
+}
+.out b{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);font-weight:400;margin-right:6px}
+.note{
+  margin-top:10px;min-height:30px;padding:7px 10px;border:1px dashed var(--border);border-radius:6px;
+  font-size:13px;color:var(--text-2);
+}
+.note:focus{border-style:solid;border-color:var(--border-strong);background:var(--surface-2);outline:none}
+.note:empty::before{content:attr(data-ph);color:var(--text-3)}
 
-  table{width:100%;border-collapse:collapse;margin:0 0 10px;font-size:16px;}
-  th{text-align:left;font-family:"Archivo",system-ui,sans-serif;font-weight:600;font-size:13px;color:var(--ink-soft);padding:0 14px 9px 0;border-bottom:1.5px solid var(--ink);}
-  td{padding:12px 14px 12px 0;border-bottom:1px solid var(--rule);vertical-align:top;}
-  td:first-child{font-weight:500;}
+/* ---------- links ---------- */
+.links{display:flex;flex-direction:column;gap:2px;margin-top:10px}
+.lk{display:flex;align-items:center;gap:8px;font-size:13px;padding:3px 0}
+.lk a{color:var(--accent);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lk a:hover{text-decoration:underline}
+.lk .ico{flex:none;color:var(--text-3);font-family:var(--mono);font-size:11px}
+.lk .del{opacity:0}
+.lk:hover .del{opacity:1}
 
-  .fillzone{background:var(--paper-2);border:1px solid var(--rule);padding:38px 34px;margin-top:8px;}
-  @media(max-width:620px){.fillzone{padding:26px 20px;}}
+/* ---------- tiers ---------- */
+.tier{border:1px solid var(--border);border-radius:6px;margin-bottom:8px;overflow:hidden}
+.tier-h{display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--surface-2);cursor:pointer;width:100%;text-align:left}
+.tier-h .cnt{font-family:var(--mono);font-size:11px;color:var(--text-3);margin-left:auto}
+.tier-h .car{font-family:var(--mono);font-size:10px;color:var(--text-3);transition:transform .15s}
+.tier[open] .car{transform:rotate(90deg)}
+.tier-b{padding:2px 12px 10px}
+.row .sub2{font-size:12px;color:var(--text-3);display:block}
 
-  .field{margin-bottom:22px;max-width:560px;}
-  .field label{display:block;font-family:"Archivo",system-ui,sans-serif;font-size:14px;font-weight:600;margin-bottom:7px;}
-  .field .hint{display:block;font-size:14px;color:var(--ink-soft);margin-bottom:8px;font-weight:400;font-family:"Newsreader",serif;}
-  input[type=text],textarea{
-    width:100%;font-family:"Newsreader",Georgia,serif;font-size:16px;
-    color:var(--ink);background:var(--paper);border:1px solid var(--rule);
-    border-radius:2px;padding:11px 13px;
-  }
-  textarea{min-height:76px;resize:vertical;line-height:1.5;}
-  input[type=text]:focus,textarea:focus{outline:2px solid var(--signal);outline-offset:1px;border-color:var(--signal);}
+/* ---------- tables ---------- */
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:13px}
+th{
+  font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text-3);font-weight:400;text-align:left;padding:8px 10px 8px 0;border-bottom:1px solid var(--border-strong);
+}
+td{padding:7px 10px 7px 0;border-bottom:1px solid var(--border);vertical-align:top}
+td[contenteditable]{border-radius:4px}
+td[contenteditable]:hover{background:var(--surface-2)}
+td[contenteditable]:focus{background:var(--surface-2);outline:1px solid var(--border-strong)}
+.num,td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
 
-  .checkgroup{margin-bottom:30px;}
-  .check{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--rule);cursor:pointer;}
-  .check:last-child{border-bottom:none;}
-  .check input{
-    appearance:none;-webkit-appearance:none;width:19px;height:19px;flex:0 0 19px;
-    margin:3px 0 0;border:1.5px solid var(--ink-soft);border-radius:2px;
-    background:var(--paper);cursor:pointer;position:relative;
-  }
-  .check input:checked{background:var(--signal);border-color:var(--signal);}
-  .check input:checked:after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid var(--paper);border-width:0 2px 2px 0;transform:rotate(45deg);}
-  .check input:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
-  .check span{font-size:16px;line-height:1.5;}
-  .check input:checked + span{color:var(--ink-soft);text-decoration:line-through;text-decoration-thickness:1px;}
+/* ---------- fields ---------- */
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.f{background:var(--surface);padding:12px 14px}
+.f .k{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);display:block;margin-bottom:5px}
+.f .v{font-family:var(--mono);font-size:17px;font-variant-numeric:tabular-nums;color:var(--text);padding:1px 3px;border-radius:4px;display:inline-block;min-width:30px}
+.f .v:hover{background:var(--surface-2)}
+.f .v:focus{background:var(--surface-2);outline:1px solid var(--border-strong)}
 
-  .actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:30px;padding-top:26px;border-top:1.5px solid var(--ink);}
-  button.act{font-family:"Archivo",system-ui,sans-serif;font-size:15px;font-weight:600;padding:12px 22px;border-radius:3px;cursor:pointer;border:1.5px solid var(--ink);}
-  .btn-primary{background:var(--ink);color:var(--paper);}
-  .btn-primary:hover{background:var(--signal);border-color:var(--signal);}
-  .btn-ghost{background:transparent;color:var(--ink);}
-  .btn-ghost:hover{background:var(--paper);}
-  button:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
-  .status{font-family:"Archivo",system-ui,sans-serif;font-size:14px;color:var(--ok);font-weight:500;}
+/* ---------- decisions ---------- */
+.dec{border:1px solid var(--border);border-radius:6px;padding:12px 14px;margin-bottom:8px}
+.dec.res{background:var(--ok-soft);border-color:transparent}
+.dec-h{display:flex;align-items:flex-start;gap:10px}
+.dec-q{flex:1;font-weight:500;font-size:13.5px}
+.dec .note{margin-top:8px}
 
-  .note{font-size:15px;color:var(--ink-soft);border-left:2px solid var(--signal);padding-left:16px;max-width:62ch;margin:24px 0 0;}
+/* ---------- activity ---------- */
+.act{font-family:var(--mono);font-size:11.5px;color:var(--text-3);display:flex;gap:10px;padding:4px 0;border-bottom:1px solid var(--border)}
+.act:last-child{border-bottom:none}
+.act .w{color:var(--text-2);flex:none}
 
-  footer{padding:56px 0 80px;}
-  footer ol{max-width:60ch;padding-left:20px;}
-  footer li{margin-bottom:10px;}
+footer{padding:26px 0 44px;font-family:var(--mono);font-size:11px;color:var(--text-3);display:flex;gap:14px;flex-wrap:wrap}
+footer button{color:var(--text-3);text-decoration:underline;text-underline-offset:2px}
+footer button:hover{color:var(--accent)}
+.sync{margin-left:auto;display:flex;align-items:center;gap:6px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--text-3)}
+.dot.on{background:var(--ok)}
 
-  /* ---------- floating jump bubble ---------- */
-  .fab{
-    position:fixed;right:22px;bottom:22px;z-index:60;
-    display:flex;align-items:center;gap:11px;
-    background:var(--ink);color:var(--paper);
-    border:none;border-radius:99px;
-    padding:13px 20px 13px 15px;cursor:pointer;
-    font-family:"Archivo",system-ui,sans-serif;
-    font-size:14px;font-weight:600;letter-spacing:-.01em;
-    box-shadow:0 6px 20px rgba(32,38,26,.28);
-    transition:transform .2s cubic-bezier(.4,0,.2,1),
-               background .2s ease,
-               opacity .25s ease;
-  }
-  .fab:hover{background:var(--signal);transform:translateY(-2px);}
-  .fab:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
-  .fab[hidden]{display:none;}
-  .fab.tucked{opacity:0;pointer-events:none;transform:translateY(10px);}
+/* ---------- ccx additions ---------- */
+.ctry{
+  display:flex;align-items:center;gap:8px;background:var(--surface-2);
+  border:1px solid var(--border);border-radius:var(--radius);padding:5px 10px;
+}
+.ctry .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3)}
+.ctry select{
+  font:inherit;font-size:13px;font-weight:500;background:transparent;border:none;color:var(--text);
+  padding:0 2px;cursor:pointer;
+}
+.ctry select:focus{outline:none}
+.ctry .chip{margin-top:0}
 
-  .fab-ring{position:relative;width:34px;height:34px;flex:0 0 34px;}
-  .fab-ring svg{display:block;transform:rotate(-90deg);}
-  .fab-ring circle{fill:none;stroke-width:3;}
-  .fab-ring .track{stroke:rgba(231,233,225,.25);}
-  .fab-ring .arc{
-    stroke:var(--paper);stroke-linecap:round;
-    transition:stroke-dashoffset .45s cubic-bezier(.4,0,.2,1);
-  }
-  .fab-num{
-    position:absolute;inset:0;display:grid;place-items:center;
-    font-size:11px;font-weight:700;font-variant-numeric:tabular-nums;
-  }
-  .fab-txt{display:flex;flex-direction:column;align-items:flex-start;line-height:1.25;}
-  .fab-txt small{font-weight:500;font-size:12px;opacity:.72;}
+.lead{font-size:15px;line-height:1.65;color:var(--text);padding:12px 2px 2px;max-width:720px}
+.lead[contenteditable]:hover{background:var(--surface-2);border-radius:4px}
+.lead[contenteditable]:focus{background:var(--surface-2);outline:1px solid var(--border-strong);border-radius:4px}
 
-  @media (max-width:560px){
-    .fab{right:14px;bottom:14px;padding:11px 17px 11px 12px;}
-    .fab-txt strong{font-size:13px;}
-    .fab-txt small{display:none;}
-  }
-  @media (prefers-reduced-motion: reduce){
-    .fab,.fab-ring .arc{transition:none;}
-  }
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-top:12px}
+@media(max-width:820px){.flow{grid-template-columns:1fr}}
+.fs{background:var(--surface);padding:12px 14px;min-width:0}
+.fs .n{font-family:var(--mono);font-size:11px;color:var(--accent);display:block;margin-bottom:3px}
+.fs h3{padding:1px 2px;border-radius:4px}
+.fs .d{font-size:13px;color:var(--text-2);margin-top:4px;padding:1px 2px;border-radius:4px;display:block}
+.fs [contenteditable]:hover{background:var(--surface-2)}
+.fs [contenteditable]:focus{background:var(--surface-2);outline:1px solid var(--border-strong)}
 
-  .send-note{
-    font-size:14px;color:var(--ink-soft);max-width:62ch;
-    margin:0 0 18px;
-  }
-  .act[disabled]{opacity:.55;cursor:not-allowed;}
-  .sent-panel{
-    display:none;background:var(--paper);border:1.5px solid var(--ok);
-    border-radius:4px;padding:20px 22px;margin-top:22px;
-  }
-  .sent-panel.on{display:block;}
-  .sent-panel h4{
-    font-family:"Archivo",system-ui,sans-serif;font-size:16px;font-weight:700;
-    margin:0 0 6px;color:var(--ok);
-  }
-  .sent-panel p{font-size:15px;color:var(--ink-soft);margin:0;}
+.blist{margin-top:6px}
+.blist .row{align-items:center}
+.blist .dash{flex:none;width:15px;color:var(--text-3);font-family:var(--mono);font-size:12px;text-align:center}
+
+.pilotf{grid-template-columns:repeat(3,1fr)}
+@media(max-width:640px){.pilotf{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){#s-next .row{flex-wrap:wrap}#s-next .tx{flex-basis:calc(100% - 30px)}#s-next .chip.own{margin-left:25px}#s-next .del{opacity:1}}
+.f .v.txt{font-family:var(--sans);font-size:14px;font-weight:500}
+
+.price{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding:14px 2px 6px}
+.price .amt{font-family:var(--mono);font-size:30px;font-variant-numeric:tabular-nums;letter-spacing:-.01em;padding:0 3px;border-radius:4px}
+.price .unit{font-size:15px;color:var(--text-2);padding:0 3px;border-radius:4px}
+.price [contenteditable]:hover{background:var(--surface-2)}
+.price [contenteditable]:focus{background:var(--surface-2);outline:1px solid var(--border-strong)}
+
+.cmt{margin-top:14px;padding-top:12px;border-top:1px dashed var(--border)}
+.cmt .grp-t{margin-bottom:2px}
+.ctry-tbl td .chip{margin-top:0}
 </style>
 
-<div class="bar">
-  <div class="bar-in">
-    <div class="bar-name"><img class="mark" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAIq0lEQVR42u1bS09TWxQ+j7a0EKFU1IkDJzIxPETRSJw5MlFHECsvMVFnDppAQgyaEFtSRCJ/QaMmolFBRKMYkBgHGpyJvBp0Spog0PNoz2PfweddOWnVy5VXafY3ME1zdmV/Xa9vrVVB4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4MgBiH9/Uvx5VpIk27YZY3iHMbb6s06s5uDmQ1rLYVmWBUGwLEuSJFmWf3ntX7LjcrnAiNvtzlnbk6Sf5Ho8HrxwuVyr5Ain8LAkSfRROeSZoigIwunTp8fGxiYmJm7cuOH3+/H+H24riiIeaG9v//Tp0/j4eGNjIz7K7XavntztYTsVFRXJZJL9i5mZmWAwiAfcbncaTaAGnhUKhZgDL1++PHz4MB2UZXnbGxRCT3t7O2NsZWVF13VVVXHbwcHByspK8rg0gmAjb9++NU1TURRN03BQUZRoNFpcXAz2nQe3MUHXr1+3bVvTNMMwUqmUpmm6rjPGlpeXw+Ew3ZbMAeyIojg2NsYYw0FwlEqlGGOxWKypqQmP/a9wlr0EMcZ0XU/9i2Qyqeu6aZrwuHPnzjmDNwEE6boOD7UsS9M0TdNggy9evCAbXH1mzEaCOjo6cE9YkJMm8rinT5+Wl5c74wsRpKqqaZrv37+Px+P4HFVVYYOJRKKnp2fXrl2wwe1H058JAnRdx21XVlYikUggEKD4AoISiQRjrL6+vrS0dHh4GIQqiqKqqmEYjLG5ubmGhganKW0bmlZDEKBpGjxuamqKPO7du3dE0OXLlxGYgsHg1NQUY8w0TVVVFUUhj6uqqnL+vzlFkGEYyWSS4gty3MjICBF06dIlSZJQT/v9/q6uLrwPP0WQUlW1p6enpKQEVJLHZa9BrZ6gTI9bWlpaWFiAmTDGLl68iPBEmqOqqmpoaAiEqqpKHjczM0Meh3BG1UP2arH/xakoislkMj8/PxAI2LaNi1mWhasahgFT+vz586lTp4LB4PT0tM/n83g8qAb2799/79694eHh6upqwzAsywKnGy1xN69mxbfNGLNtm94sLi62LMswDJfLhZTvcrlkWX748OGxY8ei0WgymfT5fLIso846efLk6Ohod3d3IBAwDAMelwsulolkMmkYxuLiYjgcLiwsxMfCKJzFdEVFxeDgIHmcpmmoKp0eB3WSRWluXQiiKM4Y+/r169mzZzPjC1lHMBicnZ1FjtN1naL+q1evDh069DsBmCME0W0HBgaoqiRqZFmGNQUCgZ6eHmeOw8FEIhGNRlFnybKcFR63jgTB16BRoOMikQh0HHVOUEz/zuNgg/Pz883NzXCxra+815cgcIRSAK3bmZmZ+vp60nGIL06aGhoa4HEkd6mqPHjwoLOXsDWBad0JcoJuOzAwUFZWlhZfiCa/3x+NRpeXl0nHweM0TUvTcVtQUm4QQfQ5VFUmEomuri7El1+aUmVlpbOqpBw3Ozvb1NS0ZS2BjSYoTcdNT0+jV0m5HC+oF046Dh7n1HHonGx25N5QF/td56S1tTXzqmAKBWdXVxeocXbvlpaWampq/twpz5ZK+u+Kb7fbjeASCoVQdjv9BUHd7XYvLi5evXq1pqamv78fdEiSpChKYWHhlStX1iJHsr09zhiTJMk0zby8PNTZmQGFMQbLmpycnJycJKGHiWZBQcFa/oBsb49jKul2ux89erSwsIA7O00M9AmCUFdXFw6HS0tLDcOwbdu2ba/XK4ri3bt315LIsteCbNu2LMvr9VqW1d3d3dbW5mxxwPugb8vLy589e9bf319aWqppmm3bsiz7fL5v3741NjY+fvxYlmXLsnInSDt7bENDQxUVFc55HDQaXu/YsaOzs3NpaSmzGrp9+/aePXu2pg+5oQSReojFYs56msIKCf207E75zqlg0TzJHalB+rO7u3vnzp0kVklk4Q8oKysbGBgAHRgZoT6cn5+/cOGCk5qtaYOsr5oHQX/o0sNq4FPoWy8uLkLTK4qCekfTtN7eXnC6lqonGy2Ivn/MedIUuSRJVDHX1tbS5MNZMb958+bIkSNZNPlYR4Lw/SuKEolEioqKnA0g520PHDjw5MkT0lyKotDsrKWlhfZDcq1hhqmOc7uDhtQ01Pf7/ZFIBMaSmafIp7KrM/0XBGU+g4IlGo1mNjTIgurq6iYnJ9Hnx9AVRjQyMkI+tdGrIJtUSZNiAL8QR6IofvnyRRCEvLw8wzAEQfB4PKlUyrbtsrKycDh85swZQRDghpidzc/Pd3Z23rlzB9SgmMwRggzD8Hq9giBomkZfu8/nE0UR0zEI8aKiotbW1lAoVFBQAB9EnE6lUn19fZFIJB6PwwFN06QR68ZNxzYjqkFPeb3e2dnZxsbGjx8/ut1uSCr863K5DMMwTbO2tvbDhw8dHR0+nw8dWK/X6/F4Xr9+ffz48VAoFI/HMUGDMdKa2racixmGQbWfpmlU+42OjqYtL6TVfs48FYvFWlpa0urpbMdqCHL2uoaGhqiX7vF4nOsvwWAwPz8/HA7/+PEDtR8tU6mq2tfXBz0FQZ876y+kp+bm5pqbm50TQUmSaAXPNM0HDx5MTEwgQlEKR+6vrq5OG2xsM4KuXbtGq4aZWxyY52FnJW1LjFbwUECTngKn379/P3/+fFpZJGTzsst/EkR7QE6fytx6SlvixO5mmk/19vZiYrP1empdCLJtG/eEo6XtzaVFDSJofHwcI3Y4I+mpo0ePbk7tt0kEnThxAjUuPAW7zti3pz5DetHlcgmCcPPmTcRjTHVisZgzTv3y4PYDQkNbW9vCwoKu68+fP6ce1R9kEU4VFRXdv39f1/V4PH7r1i3MBbe3T/3utoIglJSU7Nu3j1L4f4pGso69e/fu3r3bmaeEHINTVWLvZJVW4JwdO1N4dnrWWn9QB0YQjFb5g7o0Iki4ZucP6jg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODhyAv8Al1MF2mfQvjMAAAAASUVORK5CYII=" alt="Duzlo"><span class="x">×</span>Bobby</div>
-    <div class="bar-track"><div class="bar-fill" id="fill"></div></div>
-    <div class="bar-count" id="count">0 of 14 done</div>
-  </div>
+</head>
+<body>
+
+<div id="gateScreen" hidden>
+  <form class="login" id="loginForm" autocomplete="on">
+    <span class="k">Prepared for ConsumerCentriX</span>
+    <h2>Survey recruitment pilot</h2>
+    <p class="sub">Sign in to open the proposal.</p>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" autocomplete="username" required>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" autocomplete="current-password" required>
+    <div class="err" id="loginErr"></div>
+    <button type="submit" class="go" id="loginBtn">Sign in</button>
+    <p class="alt" id="loginAlt"></p>
+  </form>
 </div>
 
-<div class="wrap">
-
-  <div class="hero">
-    <div class="hero-grid">
-      <div>
-        <h1>Turning long-form creators into paying Duzlo channels.</h1>
-        <p>This is the working plan for our outbound engagement, plus everything I need from you to start. Read it, fill in your part at the bottom, and we book the kickoff.</p>
-      </div>
-      <div>
-        <div class="clips">
-      <figure class="clip">
-        <img src="https://duzlo.com/_next/image?url=https%3A%2F%2Fbo4yjgpckw5anurm.public.blob.vercel-storage.com%2FNDg0REE4MzQtOUJERS00QjEyLTlFMDktMjMxOEYzNjZBOUMw.jpg&w=640&q=75" alt="Clip from Mike Majlak" loading="lazy"
-             onerror="this.style.display='none'">
-        <figcaption>5.6M</figcaption>
-      </figure>
-      <figure class="clip">
-        <img src="https://duzlo.com/_next/image?url=https%3A%2F%2Fbo4yjgpckw5anurm.public.blob.vercel-storage.com%2FREM3MDAzNkEtRTM3OS00NzhDLUI0N0MtMjcyRTU1ODI3OEFC.jpg&w=640&q=75" alt="Clip from KingKreas" loading="lazy"
-             onerror="this.style.display='none'">
-        <figcaption>2.6M</figcaption>
-      </figure>
-      <figure class="clip">
-        <img src="https://duzlo.com/_next/image?url=https%3A%2F%2Fbo4yjgpckw5anurm.public.blob.vercel-storage.com%2FQTBCOUU1NjMtRUQ3NS00QUNELUExMjgtREE4RDE1RUI0MTA1.jpg&w=640&q=75" alt="Clip from the Steiny podcast" loading="lazy"
-             onerror="this.style.display='none'">
-        <figcaption>950.6K</figcaption>
-      </figure>
-        </div>
-        <p class="clips-note">What the clippers already do with your content</p>
-      </div>
+<header class="top">
+  <div class="wrap top-in">
+    <div class="brand">
+      <span class="k">Prepared for ConsumerCentriX</span>
+      <h1>Survey recruitment: pilot proposal</h1>
     </div>
+    <div class="ctry">
+      <span class="lbl">Country</span>
+      <select id="ctrySel" aria-label="Pilot country"></select>
+      <button class="chip" id="ctryStatus" title="Click to change"></button>
+    </div>
+    <div class="gate">
+      <span class="lbl">Pilot</span>
+      <button class="sw" id="gateSw" role="switch" aria-checked="false" aria-label="Pilot agreed"></button>
+      <span class="val" id="gateVal">Not agreed</span>
+      <input type="date" id="gateDate" hidden aria-label="Start date">
+    </div>
+    <button class="whoami" id="whoami" title="Who's signed in">…</button>
+    <button class="themeBtn" id="themeBtn" title="Switch between light and dark"></button>
   </div>
+</header>
+
+<main class="wrap">
+  <div class="rail" id="rail"></div>
 
   <section>
-    <h2>What we're selling, and who we're selling it to</h2>
-    <p class="lede">Duzlo is a two-sided creator marketplace. Creators fund clipping campaigns. Clippers cut their long-form content into short-form clips and get paid per view. Roughly 2B views generated to date.</p>
-
-    <h3>Ideal customer profile</h3>
-    <p style="font-size:15px;color:var(--ink-soft);margin:0 0 14px;">Edit any line, or add one. This is the definition we'll build targeting against, so change it if I've got it wrong.</p>
-    <ul class="icp" id="icp"></ul>
-    <button class="add" id="icp-add">Add a line</button>
-
-    <p class="note">Starting point is your hand-built list of 668 qualified creators. That's the seed for the lookalike model and the first outreach cohort.</p>
+    <div class="sec-h"><span class="idx">01</span><h2>The idea</h2></div>
+    <div class="sec-b" id="s-idea"></div>
   </section>
 
   <section>
-    <h2>Month one is groundwork</h2>
-
-    <div class="weeks">
-      <div class="week">
-        <div class="week-n">Week 1</div>
-        <div>
-          <h4>Deep dive and setup</h4>
-          <ul>
-            <li>Kickoff session covering product, integration model, commercial terms, competitive landscape, and the objections you already hear</li>
-            <li>Collect all access and inputs from the checklist below</li>
-            <li>Confirm inbox warm-up status across the nine inboxes in Instantly</li>
-            <li>Agree on communication cadence and approval workflow</li>
-          </ul>
-        </div>
-      </div>
-      <div class="week">
-        <div class="week-n">Week 2</div>
-        <div>
-          <h4>Customer base analysis</h4>
-          <ul>
-            <li>Analyze existing paying creators to extract the shared traits of accounts that converted and retained</li>
-            <li>Translate the ICP into filters we can actually query: platform mix, long-form share and length, upload frequency, back catalog depth, audience size, average views per upload</li>
-            <li>Layer in spend-capacity signals: sponsor reads, membership tiers, merch, affiliates, existing paid promotion</li>
-            <li>Layer in professionalization signals: business inquiries address, named editor or producer, management or agency, existing clips channels or fan clip accounts</li>
-          </ul>
-          <span class="out">Output: written ICP profile based on what predicts conversion, not assumptions</span>
-        </div>
-      </div>
-      <div class="week">
-        <div class="week-n">Week 3</div>
-        <div>
-          <h4>Target list build</h4>
-          <ul>
-            <li>Use the customer analysis to build lookalike targeting in influencers.club and Clay</li>
-            <li>Enrich, dedupe, and qualify the initial list</li>
-          </ul>
-          <span class="out">Output: target list with TAM estimate and proposed month-two volume</span>
-        </div>
-      </div>
-      <div class="week">
-        <div class="week-n">Week 4</div>
-        <div>
-          <h4>Messaging</h4>
-          <ul>
-            <li>Separate angles per niche, since clipper supply differs across them</li>
-            <li>Separate value propositions to test against each other</li>
-            <li>Separate subject lines, tested independently of body copy</li>
-            <li>Personalization drawn from recent uploads, not merge tags</li>
-            <li>Draft email sequences: value-first opener, proof, soft ask, breakup</li>
-          </ul>
-          <span class="out">Output: full messaging pack, submitted for your approval before anything sends</span>
-        </div>
-      </div>
-    </div>
+    <div class="sec-h"><span class="idx">02</span><h2>How it works</h2><span class="sub">Five steps, same in every country</span></div>
+    <div class="sec-b" id="s-flow"></div>
   </section>
 
   <section>
-    <h2>How execution runs</h2>
-
-    <h3>Approval workflow</h3>
-    <ul class="plain">
-      <li>Every message template is approved by you before sending</li>
-      <li>Templates live in one shared doc with a version log</li>
-      <li>Changes to live copy go through the same approval step</li>
-      <li>24-hour turnaround requested on approvals, so sequences don't stall</li>
-    </ul>
-
-    <h3>Optimization</h3>
-    <p>Tuned in this order: reply rate, then positive reply rate, then meetings booked. If the data says the call-to-action should change, it changes. If creators respond better to API docs or a self-serve link than a call, we stop asking for the call.</p>
-
-    <h3>Tech stack</h3>
-    <table>
-      <thead><tr><th>Tool</th><th>Role</th><th>Provided by</th></tr></thead>
-      <tbody>
-        <tr><td>influencers.club</td><td>Creator data, discovery, enrichment</td><td>Bobby</td></tr>
-        <tr><td>Clay</td><td>Enrichment and list building</td><td>Bobby</td></tr>
-        <tr><td>Instantly / Smartlead</td><td>Email sending infrastructure</td><td>Duzlo, existing setup</td></tr>
-        <tr><td>Claude Code</td><td>Reporting and analysis</td><td>Bobby</td></tr>
-      </tbody>
-    </table>
+    <div class="sec-h"><span class="idx">03</span><h2>Where respondents come from</h2></div>
+    <div class="sec-b" id="s-sources"></div>
   </section>
 
   <section>
-    <h2>What we measure</h2>
-
-    <table>
-      <thead><tr><th>Metric</th><th>Benchmark</th><th>Basis</th></tr></thead>
-      <tbody>
-        <tr><td>Booked meetings, first 3 months</td><td>20 to 30</td><td>Roughly 2% email-to-meeting conversion</td></tr>
-      </tbody>
-    </table>
-
-    <h3>Tracked weekly</h3>
-    <ul class="plain">
-      <li>Deliverability and bounce rate</li>
-      <li>Open and reply rate per sequence and per segment</li>
-      <li>Positive reply rate</li>
-      <li>Meetings booked and meeting show rate</li>
-      <li>Pipeline value by creator tier</li>
-    </ul>
-
-    <h3>Communication cadence</h3>
-    <table>
-      <thead><tr><th>What</th><th>When</th><th>Format</th></tr></thead>
-      <tbody>
-        <tr><td>Kickoff deep dive</td><td>Week 1</td><td>90-minute call</td></tr>
-        <tr><td>Weekly sync</td><td>Weekly</td><td>30-minute call</td></tr>
-        <tr><td>Weekly report</td><td>Every Monday</td><td>Written: volume, deliverability, replies, meetings</td></tr>
-        <tr><td>Message approvals</td><td>As needed</td><td>Shared doc, 24-hour turnaround</td></tr>
-        <tr><td>Monthly review</td><td>End of each month</td><td>Call plus written summary and next-month plan</td></tr>
-        <tr><td>Ad hoc</td><td>Anytime</td><td>Slack or email</td></tr>
-      </tbody>
-    </table>
+    <div class="sec-h"><span class="idx">04</span><h2>The pilot</h2><span class="sub" id="pilotSub"></span></div>
+    <div class="sec-b" id="s-pilot"></div>
   </section>
 
-  <section id="kickoff">
-    <h2>Your part</h2>
-    <p class="lede">Everything below is what I need to start. Your answers save as you type, so you can come back to this. When you're done, send it over with the button at the bottom.</p>
+  <section>
+    <div class="sec-h"><span class="idx">05</span><h2>How we validate</h2></div>
+    <div class="sec-b" id="s-validate"></div>
+  </section>
 
-    <div class="fillzone">
+  <section>
+    <div class="sec-h"><span class="idx">06</span><h2>After the pilot: community and reuse</h2></div>
+    <div class="sec-b" id="s-community"></div>
+  </section>
 
-      <h3 style="margin-top:0">Decisions</h3>
-      <div class="field">
-        <label for="f-approver">Who approves messaging</label>
-        <span class="hint">Defaults to you unless someone else should sign off.</span>
-        <input type="text" id="f-approver" data-k="approver" data-req="1" placeholder="Name and email">
-      </div>
-      <div class="field">
-        <label for="f-meetings">Who takes booked meetings</label>
-        <span class="hint">This is where I route leads, so it needs a calendar I can point at.</span>
-        <input type="text" id="f-meetings" data-k="meetings" data-req="1" placeholder="Name, email, and calendar link">
-      </div>
+  <section>
+    <div class="sec-h"><span class="idx">07</span><h2>Price</h2></div>
+    <div class="sec-b" id="s-price"></div>
+  </section>
 
-      <h3>Access</h3>
-      <p style="font-size:15px;color:var(--ink-soft);margin:0 0 12px;max-width:60ch;">These happen in the tools themselves. Tick them off once you've sent the invite.</p>
-      <div class="checkgroup">
-        <label class="check"><input type="checkbox" data-k="a1" data-req="1"><span>Instantly account access or invite, covering the 3 domains and 9 inboxes already warming</span></label>
-        <label class="check"><input type="checkbox" data-k="a2" data-req="1"><span>Calendar booking link routed to whoever takes sales calls</span></label>
-        <label class="check"><input type="checkbox" data-k="a3" data-req="1"><span>Shared folder or workspace for templates, lists, and reports</span></label>
-      </div>
+  <section>
+    <div class="sec-h"><span class="idx">08</span><h2>Next steps</h2><span class="sub" id="nextSub"></span></div>
+    <div class="sec-b" id="s-next"></div>
+  </section>
 
-      <h3>Files</h3>
-      <p style="font-size:15px;color:var(--ink-soft);margin:0 0 16px;max-width:62ch;">Drop these in the shared folder and paste the link. Use restricted sharing rather than a public link, especially for anything with customer data in it.</p>
-      <div class="field">
-        <label for="f-l1">The 668-creator qualified list</label>
-        <span class="hint">With any notes on why each was included, if you have them.</span>
-        <input type="text" id="f-l1" data-k="l1" data-req="1" placeholder="Paste link">
-      </div>
-      <div class="field">
-        <label for="f-l2">Export of current paying creators</label>
-        <span class="hint">Spend, tenure, platform, and content type. This is what the week-two analysis runs on.</span>
-        <input type="text" id="f-l2" data-k="l2" data-req="1" placeholder="Paste link">
-      </div>
-      <div class="field">
-        <label for="f-l3">Past outreach that's been sent, with results</label>
-        <span class="hint">Even if it didn't work. Especially if it didn't work.</span>
-        <input type="text" id="f-l3" data-k="l3" data-req="1" placeholder="Paste link, or write 'none'">
-      </div>
-      <div class="field">
-        <label for="f-l4">Case studies, screenshots, or numbers cleared for external use</label>
-        <span class="hint">Anything I can name in an email without checking first.</span>
-        <input type="text" id="f-l4" data-k="l4" data-req="1" placeholder="Paste link">
-      </div>
+  <section>
+    <div class="sec-h"><span class="idx">09</span><h2>Open decisions</h2></div>
+    <div class="sec-b" id="s-decisions"></div>
+  </section>
 
-      <h3>Answers</h3>
-      <p style="font-size:15px;color:var(--ink-soft);margin:0 0 16px;max-width:62ch;">Type straight in here. Rough is fine, I'd rather have your words than a polished doc.</p>
-      <div class="field" style="max-width:640px">
-        <label for="f-t1">Pricing, minimums, and what a new creator goes through to get started</label>
-        <textarea id="f-t1" data-k="t1" data-req="1"></textarea>
-      </div>
-      <div class="field" style="max-width:640px">
-        <label for="f-t2">Known competitors, and how Duzlo positions against them</label>
-        <textarea id="f-t2" data-k="t2" data-req="1"></textarea>
-      </div>
-      <div class="field" style="max-width:640px">
-        <label for="f-t3">Objections that come up most often on sales calls</label>
-        <span class="hint">These go straight into the messaging, so the more specific the better.</span>
-        <textarea id="f-t3" data-k="t3" data-req="1" style="min-height:100px"></textarea>
-      </div>
-      <div class="field" style="max-width:640px">
-        <label for="f-t5">Creators we can name in outreach</label>
-        <span class="hint">The single strongest thing in a cold email. Impaulsive, Full Send, NELK, Steiny, LinkMe and KingKreas are already on your site, so I'll treat those as cleared unless you say otherwise. Tell me who else I can name, and anyone I definitely can't.</span>
-        <textarea id="f-t5" data-k="t5" data-req="1" style="min-height:100px"></textarea>
-      </div>
+  <section>
+    <div class="sec-h"><span class="idx">10</span><h2>Countries</h2><span class="sub">Add any market in your pipeline</span></div>
+    <div class="sec-b" id="s-countries"></div>
+  </section>
 
-      <div class="field" style="max-width:640px">
-        <label for="f-t4">Brand voice, or examples of emails you like</label>
-        <textarea id="f-t4" data-k="t4" data-req="1"></textarea>
-      </div>
+  <section>
+    <div class="sec-h"><span class="idx">11</span><h2>Team</h2><span class="sub">Type @name anywhere to tag someone</span></div>
+    <div class="sec-b" id="s-team"></div>
+  </section>
 
-      <div class="field" style="max-width:640px">
-        <label for="f-notes">Anything else I should know</label>
-        <span class="hint">Constraints, creators to avoid, things that have burned you before.</span>
-        <textarea id="f-notes" data-k="notes" style="min-height:110px"></textarea>
-      </div>
-
-      <p class="send-note">Sending stores your answers securely so I can pick them up. Nothing sends until you press the button, and you can keep editing and send again if something changes.</p>
-
-      <div class="actions">
-        <button class="act btn-primary" id="send">Send to Bobby</button>
-        <button class="act btn-ghost" id="copy">Copy instead</button>
-        <button class="act btn-ghost" id="reset">Clear everything</button>
-        <span class="status" id="status"></span>
-      </div>
-
-      <div class="sent-panel" id="sent">
-        <h4>Got it</h4>
-        <p>Your answers are with me. I'll confirm inbox health and come back with kickoff times. If you change something, just press send again.</p>
-      </div>
-    </div>
+  <section>
+    <div class="sec-h"><span class="idx">12</span><h2>Activity</h2></div>
+    <div class="sec-b" id="s-activity"></div>
   </section>
 
   <footer>
-    <h2 style="font-size:26px">Next steps</h2>
-    <ol>
-      <li>Sign the agreement and process the first monthly payment</li>
-      <li>Send over the answers above</li>
-      <li>I confirm inbox health and start the customer base analysis</li>
-    </ol>
+    <span id="saved">Saved locally</span>
+    <button id="exportBtn">Export JSON</button>
+    <button id="resetBtn">Reset to default</button>
+    <button id="signOutBtn" class="signout" hidden>Sign out</button>
+    <span class="sync"><span class="dot" id="syncDot"></span><span id="syncTxt">Local only</span></span>
   </footer>
+</main>
 
-</div>
-
-
-<button class="fab" id="fab" type="button" aria-label="Jump to the section you need to fill in">
-  <span class="fab-ring">
-    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
-      <circle class="track" cx="17" cy="17" r="14.5"></circle>
-      <circle class="arc" id="fab-arc" cx="17" cy="17" r="14.5"
-              stroke-dasharray="91.1" stroke-dashoffset="91.1"></circle>
-    </svg>
-    <span class="fab-num" id="fab-num">0</span>
-  </span>
-  <span class="fab-txt">
-    <strong id="fab-label">Your part</strong>
-    <small id="fab-sub">14 things left</small>
-  </span>
-</button>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.min.js"></script>
 <script>
-(function(){
-  var KEY = 'duzlo:onboarding:v2';
-  var mem = {};
-  var saveTimer;
+/* =========================================================================
+   SHARED STORAGE
+   Leave the two values blank and the page saves to this browser only
+   (handy for editing before you deploy). Fill them in and it requires a
+   sign-in and syncs live through Supabase. See README.md.
+   ======================================================================== */
+const SUPABASE_URL = 'https://hwymllxqfltocfyicqdd.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_Zr15dlMzSoSJnku7RcdCiQ_yj9DUNyS';
+const DOC_ID       = 'ccx-pilot';
 
-  var DEFAULT_ICP = [
-    "Long-form creators: podcasters, livestreamers, and vloggers with a consistent long-form back catalog",
-    "Publishing an hour or more of long-form content per week",
-    "Spend capacity of at least $4,300 to $5,000 per month on growth",
-    "Golden tier: creators doing $500K+ per year in revenue. These get priority in sequencing and the most personalized treatment."
-  ];
+/* The two accounts. Create both users in Supabase → Authentication → Users,
+   then put the same addresses here AND in supabase/schema.sql. */
+const ACCOUNTS = {
+  'm-bobby': 'bobpetkov@yahoo.com',
+  'm-ccx':   'vladimir.mitkov@consumercentrix.ch',   // <-- replace with the client's login email
+};
+/* ====================================================================== */
 
-  var fill   = document.getElementById('fill');
-  var count  = document.getElementById('count');
-  var status = document.getElementById('status');
-  var icpList= document.getElementById('icp');
+const uid = () => Math.random().toString(36).slice(2, 9);
+function todayISO() {
+  const d = new Date();
+  return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+}
+function daysBetween(a, b) { return Math.round((new Date(b + 'T00:00:00') - new Date(a + 'T00:00:00')) / 86400000); }
+function addDays(d, n) { const dt = new Date(d + 'T00:00:00'); dt.setDate(dt.getDate() + n); return dt.toISOString().slice(0, 10); }
+function fmtDate(d) { return d ? new Date(d + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : ''; }
 
-  function fields(){ return document.querySelectorAll('[data-k]'); }
-  function required(){ return document.querySelectorAll('[data-req="1"]'); }
+const STATUSES = ['To do', 'In progress', 'Blocked', 'Done'];
+const CTRY_STATUSES = ['To be confirmed', 'Confirmed', 'Later'];
+const AV_COLORS = ['#2F5D8A', '#3B7A4E', '#7A4B86', '#A8643A', '#9A6B12', '#9A4B57'];
 
-  function flash(msg, color){
-    status.textContent = msg;
-    status.style.color = color || 'var(--ok)';
-    clearTimeout(status._t);
-    status._t = setTimeout(function(){ status.textContent = ''; }, 2600);
+function T(text, owner) { return { id: uid(), text, done: false, owner: owner || 'Unassigned', status: 'To do' }; }
+function L(text) { return { id: uid(), text }; }
+
+function defaultState() {
+  return {
+    meta: { agreed: false, startDate: '', createdAt: todayISO(), updatedAt: null },
+    members: [
+      { id: 'm-bobby', name: 'Bobby', color: AV_COLORS[0] },
+      { id: 'm-ccx', name: 'ConsumerCentriX', color: AV_COLORS[1] },
+    ],
+    country: 0,
+    countries: [
+      { id: uid(), name: 'Kenya', status: 'To be confirmed', payout: 'M-Pesa', note: '' },
+    ],
+    idea: 'One way to recruit survey respondents that works in any country, so you don\'t need a new local agency each time. We recruit the respondents, you keep your own survey. We start with one pilot country to show it works, then repeat it in any country in your pipeline.',
+    flow: [
+      { id: uid(), t: 'Find', d: 'Build a target lead list in {country}. Qualify every lead with AI.' },
+      { id: uid(), t: 'Invite', d: 'Personal email, plus a LinkedIn message where we can\'t find an email.' },
+      { id: uid(), t: 'Screen', d: 'A 1-minute screener at the start of the survey checks role, company size, gender, age and ownership. Only people who pass are redirected to your survey.' },
+      { id: uid(), t: 'Survey', d: 'They complete your survey through your link.' },
+      { id: uid(), t: 'Validate and pay', d: 'We check every response, then pay the incentive by mobile money ({payout} in {country}).' },
+    ],
+    sources: [
+      L('Google Maps business listings'),
+      L('Local business directories'),
+      L('Company websites'),
+      L('LinkedIn (Sales Navigator, Apollo)'),
+      L('Instagram and Facebook business pages'),
+      L('Women and youth enterprise networks'),
+    ],
+    pilot: [
+      { id: uid(), k: 'Completed surveys', v: '300' },
+      { id: uid(), k: 'Women-led businesses', v: 'At least 150' },
+      { id: uid(), k: 'Owners under 35', v: 'At least 150' },
+      { id: uid(), k: 'Business size', v: 'Under 250 employees' },
+      { id: uid(), k: 'Timeline', v: '5–6 weeks' },
+    ],
+    pilotNote: 'The first 2 weeks warm up new sending domains. It\'s a one-time setup that carries over to every country after.',
+    validate: [
+      L('Every invite carries a unique ID, so we know exactly who answered.'),
+      L('Each respondent gives a phone number and name, which must match the mobile-money account we pay.'),
+      L('We check for duplicates, people who rush through, and contradictory answers.'),
+      L('Open answers get an AI quality review.'),
+      L('No one is paid or billed until they pass. You get the full ID list to audit.'),
+    ],
+    community: [
+      L('Respondents can opt in to future surveys when they get paid.'),
+      L('Each country gets its own community (WhatsApp or similar), kept warm between projects.'),
+      L('The next survey goes to people who already know us -> faster fieldwork, and quick polls become possible.'),
+      L('The lead list, sending setup and community are reused for every new project, not rebuilt.'),
+      L('New countries take about 2 weeks, since the setup carries over.'),
+    ],
+    price: { amt: 'USD 25', unit: 'per validated complete' },
+    priceNotes: [
+      L('Price per market is confirmed after a quick market check, with a quick turnaround.'),
+      L('Billed on validated completes only.'),
+      L('Invalid responses are replaced at no cost.'),
+    ],
+    next: [
+      T('Confirm the pilot country', 'ConsumerCentriX'),
+      T('Share the survey link: it should accept a respondent ID and redirect back on completion', 'ConsumerCentriX'),
+      T('Agree the start date', 'ConsumerCentriX'),
+      T('Start domain warm-up on the start date', 'Bobby'),
+      T('Build and qualify the lead list for the pilot country', 'Bobby'),
+    ],
+    decisions: [
+      { id: uid(), q: 'Which country goes first?', note: '', resolved: false },
+      { id: uid(), q: 'When do we start?', note: '', resolved: false },
+    ],
+    notes: {},
+    activity: [],
+  };
+}
+
+/* ---------------- people ---------------- */
+function members() { return (state && state.members) || []; }
+function initialsOf(n) { const p = String(n).trim().split(/\s+/).filter(Boolean); if (!p.length) return '?'; return (p.length === 1 ? p[0].slice(0, 2) : p[0][0] + p[1][0]).toUpperCase(); }
+function handleOf(n) { return String(n).trim().split(/\s+/)[0].toLowerCase(); }
+function memberByName(n) { const h = handleOf(n); return members().find(m => handleOf(m.name) === h) || null; }
+function meMember() {
+  if (session && session.user) {
+    const email = String(session.user.email || '').toLowerCase();
+    const id = Object.keys(ACCOUNTS).find(k => String(ACCOUNTS[k] || '').toLowerCase() === email);
+    return members().find(m => m.id === id) || null;
   }
+  const id = localStorage.getItem('ccx_me_id');
+  return members().find(m => m.id === id) || null;
+}
+function avatar(name, sm) {
+  const m = memberByName(name);
+  return '<span class="av' + (sm ? ' sm' : '') + '" style="background:' + (m ? m.color : 'var(--text-3)') + '">' + esc(initialsOf(name)) + '</span>';
+}
+function ownerCycle() { return ['Unassigned'].concat(members().map(m => m.name)); }
 
-  function autosize(ta){
-    ta.style.height = 'auto';
-    ta.style.height = ta.scrollHeight + 'px';
-  }
+/* ---------------- store ---------------- */
+let state = null, me = '', sb = null, session = null, saveTimer = null;
+let editing = false, pendingRender = false, lastPushed = '';
+const AUTH_ON = !!(SUPABASE_URL && SUPABASE_KEY);
+const LS = 'ccx_pilot_v1';
+function loadLocal() { try { const r = localStorage.getItem(LS); return r ? JSON.parse(r) : null; } catch (e) { return null; } }
+function saveLocal() { try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) {} }
+function setSync(on, txt) { document.getElementById('syncDot').classList.toggle('on', !!on); document.getElementById('syncTxt').textContent = txt; }
 
-  var fab      = document.getElementById('fab');
-  var fabArc   = document.getElementById('fab-arc');
-  var fabNum   = document.getElementById('fab-num');
-  var fabLabel = document.getElementById('fab-label');
-  var fabSub   = document.getElementById('fab-sub');
-  var CIRC     = 2 * Math.PI * 14.5;
-
-  function progress(){
-    var done = 0, total = 0;
-    required().forEach(function(el){
-      total++;
-      if(el.type === 'checkbox'){ if(el.checked) done++; }
-      else if((el.value||'').trim()) done++;
-    });
-    var pct = total ? Math.round(done/total*100) : 0;
-    fill.style.width = pct + '%';
-    count.textContent = done + ' of ' + total + ' done';
-
-    var left = total - done;
-    fabArc.setAttribute('stroke-dasharray', CIRC.toFixed(1));
-    fabArc.setAttribute('stroke-dashoffset', (CIRC * (1 - pct/100)).toFixed(1));
-    fabNum.textContent = left === 0 ? '\u2713' : done;
-    if(left === 0){
-      fabLabel.textContent = 'All done';
-      fabSub.textContent = 'Ready to send';
-    }else{
-      fabLabel.textContent = 'Your part';
-      fabSub.textContent = left + (left === 1 ? ' thing left' : ' things left');
-    }
-  }
-
-  /* hide the bubble once you're already reading your own section */
-  var kickoff = document.getElementById('kickoff');
-  function tuck(){
-    var box = kickoff.getBoundingClientRect();
-    var inView = box.top < window.innerHeight * 0.6 && box.bottom > 0;
-    fab.classList.toggle('tucked', inView);
-  }
-  window.addEventListener('scroll', tuck, {passive:true});
-  window.addEventListener('resize', tuck);
-
-  fab.addEventListener('click', function(){
-    kickoff.scrollIntoView({behavior:'smooth', block:'start'});
-    setTimeout(function(){
-      var first = null;
-      required().forEach(function(el){
-        if(first) return;
-        var empty = el.type === 'checkbox' ? !el.checked : !(el.value||'').trim();
-        if(empty) first = el;
-      });
-      if(first && first.type !== 'checkbox') first.focus({preventScroll:true});
-    }, 520);
-  });
-
-  /* ---------- editable ICP list ---------- */
-  function icpRow(text){
-    var li = document.createElement('li');
-
-    var dash = document.createElement('span');
-    dash.className = 'dash';
-
-    var ta = document.createElement('textarea');
-    ta.className = 'txt';
-    ta.rows = 1;
-    ta.value = text || '';
-    ta.setAttribute('aria-label','Ideal customer profile line');
-    ta.addEventListener('input', function(){ autosize(ta); queueSave(); });
-    ta.addEventListener('keydown', function(e){
-      if(e.key === 'Enter' && !e.shiftKey){
-        e.preventDefault();
-        var row = icpRow('');
-        li.after(row);
-        row.querySelector('.txt').focus();
-        queueSave();
-      }
-    });
-
-    var del = document.createElement('button');
-    del.className = 'del';
-    del.type = 'button';
-    del.innerHTML = '&times;';
-    del.title = 'Remove this line';
-    del.setAttribute('aria-label','Remove this line');
-    del.addEventListener('click', function(){
-      li.remove();
-      if(!icpList.children.length) icpList.appendChild(icpRow(''));
-      queueSave();
-    });
-
-    li.appendChild(dash);
-    li.appendChild(ta);
-    li.appendChild(del);
-    return li;
-  }
-
-  function renderICP(items){
-    icpList.innerHTML = '';
-    (items && items.length ? items : DEFAULT_ICP).forEach(function(t){
-      icpList.appendChild(icpRow(t));
-    });
-    icpList.querySelectorAll('.txt').forEach(autosize);
-  }
-
-  function readICP(){
-    return Array.prototype.map.call(
-      icpList.querySelectorAll('.txt'),
-      function(t){ return t.value.trim(); }
-    ).filter(Boolean);
-  }
-
-  document.getElementById('icp-add').addEventListener('click', function(){
-    var row = icpRow('');
-    icpList.appendChild(row);
-    row.querySelector('.txt').focus();
-  });
-
-  /* ---------- persistence ---------- */
-  function collect(){
-    fields().forEach(function(el){
-      var k = el.dataset.k;
-      mem[k] = el.type === 'checkbox' ? el.checked : el.value;
-    });
-    mem.icp = readICP();
-  }
-
-  function apply(data){
-    fields().forEach(function(el){
-      var k = el.dataset.k;
-      if(!(k in data)) return;
-      if(el.type === 'checkbox') el.checked = !!data[k];
-      else el.value = data[k] || '';
-    });
-    renderICP(data.icp);
-    mem = Object.assign({}, data);
-  }
-
-  async function save(){
-    collect();
-    progress();
-    try{ await window.storage.set(KEY, JSON.stringify(mem)); }
-    catch(e){ /* storage unavailable, values still live for this session */ }
-  }
-
-  function queueSave(){
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(save, 400);
-  }
-
-  async function load(){
-    var data = null;
-    try{
-      var r = await window.storage.get(KEY);
-      if(r && r.value) data = JSON.parse(r.value);
-    }catch(e){ /* nothing saved yet */ }
-
-    if(data) apply(data); else renderICP(null);
-
-    document.querySelectorAll('textarea[data-k]').forEach(autosize);
-    collect();
-    progress();
-  }
-
-  fields().forEach(function(el){
-    el.addEventListener(el.type === 'checkbox' ? 'change' : 'input', queueSave);
-  });
-  document.querySelectorAll('textarea[data-k]').forEach(function(ta){
-    ta.addEventListener('input', function(){ /* user-resizable, no autosize fight */ });
-  });
-
-  /* ---------- submit to Bobby ---------- */
-  var SUPA_URL = 'https://mqdcjuqnhghpyoexneri.supabase.co';
-  var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1xZGNqdXFuaGdocHlvZXhuZXJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzODQ3NDQsImV4cCI6MjEwMzk2MDc0NH0.0INvsZtn0cb3I20GUt98weuJVecaadUmrKCkZrl2pJc';
-
-  var sendBtn = document.getElementById('send');
-  var sentPanel = document.getElementById('sent');
-
-  sendBtn.addEventListener('click', async function(){
-    collect();
-
-    var required_missing = 0;
-    required().forEach(function(el){
-      var empty = el.type === 'checkbox' ? !el.checked : !(el.value||'').trim();
-      if(empty) required_missing++;
-    });
-
-    if(required_missing > 0){
-      var ok = window.confirm(
-        required_missing + (required_missing === 1 ? ' item is' : ' items are') +
-        ' still blank. Send anyway? You can always send again once you fill the rest in.'
-      );
-      if(!ok) return;
-    }
-
-    sendBtn.disabled = true;
-    var original = sendBtn.textContent;
-    sendBtn.textContent = 'Sending';
-
-    try{
-      var res = await fetch(SUPA_URL + '/rest/v1/onboarding_submissions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': SUPA_KEY,
-          'Authorization': 'Bearer ' + SUPA_KEY,
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify({
-          client: 'duzlo',
-          payload: Object.assign({}, mem, {
-            submitted_at: new Date().toISOString(),
-            items_outstanding: required_missing
-          })
+async function initStore() {
+  state = loadLocal() || defaultState();
+  if (sb) {
+    try {
+      const { data } = await sb.from('pilot_state').select('doc').eq('id', DOC_ID).maybeSingle();
+      if (data && data.doc) state = data.doc;
+      else await sb.from('pilot_state').upsert({ id: DOC_ID, doc: state });
+      sb.channel('pilot')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'pilot_state', filter: 'id=eq.' + DOC_ID }, p => {
+          if (!p.new || !p.new.doc) return;
+          if (JSON.stringify(p.new.doc) === lastPushed) return;
+          state = p.new.doc; saveLocal(); render();
         })
-      });
+        .subscribe();
+      setSync(true, 'Shared, live');
+    } catch (e) { setSync(false, 'Local only (sync failed)'); }
+  } else setSync(false, 'Local only');
+}
 
-      if(!res.ok){
-        var detail = '';
-        try{ detail = (await res.json()).message || ''; }catch(e){}
-        throw new Error(detail || ('HTTP ' + res.status));
-      }
+function touch(what) {
+  state.meta.updatedAt = new Date().toISOString();
+  if (what) {
+    state.activity.unshift({ id: uid(), t: state.meta.updatedAt, who: me || 'Someone', what });
+    state.activity = state.activity.slice(0, 60);
+  }
+  saveLocal();
+  document.getElementById('saved').textContent = 'Saved ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  if (sb) {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(async () => {
+      const body = JSON.parse(JSON.stringify(state));
+      lastPushed = JSON.stringify(body);
+      try { await sb.from('pilot_state').upsert({ id: DOC_ID, doc: body, updated_at: new Date().toISOString() }); }
+      catch (e) { setSync(false, 'Sync error'); }
+    }, 600);
+  }
+}
 
-      sentPanel.classList.add('on');
-      sendBtn.textContent = 'Send again';
-      flash('Sent.');
-      sentPanel.scrollIntoView({behavior:'smooth', block:'nearest'});
-    }catch(err){
-      sendBtn.textContent = original;
-      flash("Couldn't send. Use Copy instead and email it over.", 'var(--warn)');
-      console.error('Submit failed:', err);
-    }finally{
-      sendBtn.disabled = false;
-    }
+/* ---------------- helpers ---------------- */
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function rich(s) {
+  const m0 = meMember();
+  return esc(s).replace(/@([\wÀ-ÿ'’-]+)/g, (full, name) => {
+    const m = memberByName(name); if (!m) return full;
+    return '<span class="mention' + (m0 && m.id === m0.id ? ' self' : '') + '">@' + esc(m.name) + '</span>';
   });
+}
+function mentionsIn(s) {
+  const out = [];
+  String(s || '').replace(/@([\wÀ-ÿ'’-]+)/g, (f, n) => { const m = memberByName(n); if (m && !out.includes(m.id)) out.push(m.id); return f; });
+  return out;
+}
 
-  /* ---------- copy out ---------- */
-  document.getElementById('copy').addEventListener('click', function(){
-    collect();
-    var L = [];
-    var v = function(x){ return (x||'').trim() || '(not filled in)'; };
+/* ---------------- one-time content updates ----------------
+   Applied once per version on top of whatever is saved, so edits
+   people already made are kept. Text is only replaced when it still
+   matches the original wording. */
+const CONTENT_VERSION = 2;
+function migrate() {
+  const v = (state.meta && state.meta.contentVersion) || 1;
+  if (v >= CONTENT_VERSION) return false;
+  const same = (a, b) => String(a || '').trim() === String(b || '').trim();
+  const has = (arr, t) => arr.some(x => same(x.text, t));
 
-    L.push('DUZLO ONBOARDING');
-    L.push('');
-    L.push('IDEAL CUSTOMER PROFILE (as edited by client)');
-    (mem.icp||[]).forEach(function(t){ L.push('- ' + t); });
-    L.push('');
-    L.push('DECISIONS');
-    L.push('Approves messaging: ' + v(mem.approver));
-    L.push('Takes booked meetings: ' + v(mem.meetings));
-    L.push('');
-    L.push('ACCESS');
-    document.querySelectorAll('.check').forEach(function(row){
-      var cb = row.querySelector('input');
-      L.push((cb.checked ? '[x] ' : '[ ] ') + row.querySelector('span').textContent.trim());
-    });
-    L.push('');
-    L.push('FILES');
-    L.push('668-creator list: ' + v(mem.l1));
-    L.push('Paying creator export: ' + v(mem.l2));
-    L.push('Past outreach: ' + v(mem.l3));
-    L.push('Cleared case studies / numbers: ' + v(mem.l4));
-    L.push('');
-    L.push('ANSWERS');
-    L.push('Pricing, minimums, creator onboarding:');
-    L.push(v(mem.t1));
-    L.push('');
-    L.push('Competitors and positioning:');
-    L.push(v(mem.t2));
-    L.push('');
-    L.push('Common objections:');
-    L.push(v(mem.t3));
-    L.push('');
-    L.push('Creators we can name in outreach:');
-    L.push(v(mem.t5));
-    L.push('');
-    L.push('Brand voice / emails you like:');
-    L.push(v(mem.t4));
-    if((mem.notes||'').trim()){
-      L.push('');
-      L.push('NOTES');
-      L.push(mem.notes);
-    }
+  /* Nigeria becomes the pilot market; Kenya fieldwork is done */
+  let ng = state.countries.findIndex(c => /nigeria/i.test(c.name));
+  if (ng < 0) {
+    state.countries.push({ id: uid(), name: 'Nigeria', status: 'To be confirmed', payout: 'wallet, bank account or airtime', note: 'Pilot market: 50 first, then ~300' });
+    ng = state.countries.length - 1;
+  }
+  state.country = ng;
+  const ke = state.countries.find(c => /kenya/i.test(c.name));
+  if (ke && ke.status === 'To be confirmed') { ke.status = 'Later'; if (!ke.note) ke.note = 'Fieldwork already complete'; }
 
-    var text = L.join('\n');
-    navigator.clipboard.writeText(text).then(function(){
-      flash('Copied. Paste it into your reply.');
-    }).catch(function(){
-      var ta = document.createElement('textarea');
-      ta.value = text;
-      document.body.appendChild(ta);
-      ta.select();
-      try{ document.execCommand('copy'); flash('Copied. Paste it into your reply.'); }
-      catch(e){ flash('Copy failed, select the text manually.', 'var(--warn)'); }
-      document.body.removeChild(ta);
-    });
-  });
+  /* How it works: invite + payout */
+  const f1 = state.flow[1], f4 = state.flow[4];
+  if (f1 && same(f1.d, "Personal email, plus a LinkedIn message where we can't find an email."))
+    f1.d = 'Personal email or LinkedIn message. Where there is no email, a direct message to the business contact they publish on social or WhatsApp.';
+  if (f4 && same(f4.d, 'We check every response, then pay the incentive by mobile money ({payout} in {country}).'))
+    f4.d = "We check every response, then pay the incentive to the respondent's {payout}.";
 
-  document.getElementById('reset').addEventListener('click', async function(){
-    fields().forEach(function(el){
-      if(el.type === 'checkbox') el.checked = false; else el.value = '';
-    });
-    mem = {};
-    renderICP(null);
-    progress();
-    try{ await window.storage.delete(KEY); }catch(e){}
-    flash('Cleared.');
-  });
+  /* Sources: informal-business channels */
+  ['Phone and WhatsApp numbers published on business listings', 'Partner associations and referrals from validated respondents']
+    .forEach(t => { if (!has(state.sources, t)) state.sources.push(L(t)); });
 
-  load();
-  tuck();
-})();
+  /* Pilot: 50 as a checkpoint */
+  const pf = k => state.pilot.find(x => same(x.k, k));
+  const c = pf('Completed surveys'); if (c && same(c.v, '300')) c.v = '50 checkpoint, then ~300';
+  const w = pf('Women-led businesses'); if (w && same(w.v, 'At least 150')) w.v = 'At least half';
+  const y = pf('Owners under 35'); if (y && same(y.v, 'At least 150')) y.v = 'At least half';
+  if (same(state.pilotNote, "The first 2 weeks warm up new sending domains. It's a one-time setup that carries over to every country after."))
+    state.pilotNote = 'The first 50 are validated within 24–48 hours; the full run starts once you confirm quality. The first 2 weeks warm up new sending domains, a one-time setup.';
+
+  /* Validation: overlap with the field partner */
+  const ov = 'Overlap with your field partner is checked by comparing hashed phone numbers; any match is removed and not billed.';
+  if (!has(state.validate, ov)) state.validate.push(L(ov));
+  const dq = 'Can the field firm share hashed phone numbers for the overlap check?';
+  if (!state.decisions.some(d => same(d.q, dq))) state.decisions.push({ id: uid(), q: dq, note: '', resolved: false });
+
+  state.meta.contentVersion = CONTENT_VERSION;
+  return true;
+}
+
+function curCountry() { return state.countries[state.country] || state.countries[0] || { name: 'the pilot country', payout: 'mobile money', status: 'To be confirmed' }; }
+/* {country} and {payout} in editable text follow the country picked in the header */
+function fill(s) { const c = curCountry(); return String(s || '').replace(/\{country\}/g, c.name).replace(/\{payout\}/g, c.payout || 'mobile money'); }
+const statusClass = s => s === 'In progress' ? 's-prog' : s === 'Done' || s === 'Confirmed' ? 's-done' : s === 'Blocked' ? 's-block' : '';
+
+function getAt(path) { return path.split('.').reduce((o, k) => o == null ? o : o[/^\d+$/.test(k) ? Number(k) : k], state); }
+function setAt(path, val) {
+  const parts = path.split('.'), last = parts.pop();
+  const parent = parts.reduce((o, k) => { const key = /^\d+$/.test(k) ? Number(k) : k; if (o[key] == null) o[key] = {}; return o[key]; }, state);
+  parent[/^\d+$/.test(last) ? Number(last) : last] = val;
+}
+function removeAt(path) {
+  const parts = path.split('.'), last = Number(parts.pop());
+  parts.reduce((o, k) => o[/^\d+$/.test(k) ? Number(k) : k], state).splice(last, 1);
+}
+
+/* ---------------- blocks ---------------- */
+function noteBlock(key) {
+  const path = 'notes.' + key;
+  return '<div class="cmt"><div class="grp-t">Comments</div>'
+    + '<div class="note" contenteditable="true" data-ph="Questions, edits, thoughts…" data-edit="' + path + '">' + rich((state.notes || {})[key] || '') + '</div>'
+    + '<button class="mbtn" data-act="mention" data-path="' + path + '">@ tag someone</button></div>';
+}
+function bulletList(arr, path, label) {
+  return '<div class="blist">'
+    + arr.map((it, i) => '<div class="row"><span class="dash">–</span>'
+      + '<span class="tx" contenteditable="true" data-edit="' + path + '.' + i + '.text">' + rich(it.text) + '</span>'
+      + '<button class="del" data-act="delItem" data-path="' + path + '.' + i + '" aria-label="Delete">×</button></div>').join('')
+    + '</div><button class="add" data-act="addItem" data-path="' + path + '">+ ' + label + '</button>';
+}
+function taskRow(t, path) {
+  return '<div class="row ' + (t.done ? 'done' : '') + '">'
+    + '<button class="cb" role="checkbox" aria-checked="' + (t.done ? 'true' : 'false') + '" data-act="toggle" data-path="' + path + '" aria-label="Done"></button>'
+    + '<span class="tx" contenteditable="true" data-edit="' + path + '.text">' + rich(t.text) + '</span>'
+    + '<button class="chip own' + (t.owner === 'Unassigned' ? ' none' : '') + '" data-act="owner" data-path="' + path + '">'
+      + (t.owner === 'Unassigned' ? 'Unassigned' : avatar(t.owner, true) + esc(t.owner)) + '</button>'
+    + '<button class="chip ' + statusClass(t.status) + '" data-act="status" data-path="' + path + '">' + esc(t.status) + '</button>'
+    + '<button class="del" data-act="delItem" data-path="' + path + '" aria-label="Delete">×</button></div>';
+}
+
+/* ---------------- timeline ---------------- */
+const STAGES = [
+  { t: 'Setup and warm-up', w: 'Weeks 1–2', from: 0, to: 13 },
+  { t: 'Fieldwork', w: 'Weeks 3–5', from: 14, to: 34 },
+  { t: 'Validate and deliver', w: 'Week 6', from: 35, to: 41 },
+  { t: 'Next countries', w: '~2 weeks each', from: 42, to: Infinity },
+];
+function stageWhen(s) {
+  const d = state.meta.startDate;
+  if (!state.meta.agreed || !d) return s.w;
+  return s.to === Infinity ? fmtDate(addDays(d, s.from)) + ' →' : fmtDate(addDays(d, s.from)) + ' – ' + fmtDate(addDays(d, s.to));
+}
+function curStage() {
+  if (!state.meta.agreed || !state.meta.startDate) return -1;
+  const e = daysBetween(state.meta.startDate, todayISO());
+  return STAGES.findIndex(s => e >= s.from && e <= s.to);
+}
+
+/* ---------------- render ---------------- */
+function render() {
+  if (editing) { pendingRender = true; return; }
+  pendingRender = false;
+  const meM = meMember(), c = curCountry();
+
+  /* header */
+  document.getElementById('ctrySel').innerHTML = state.countries.map((x, i) =>
+    '<option value="' + i + '"' + (i === state.country ? ' selected' : '') + '>' + esc(x.name) + '</option>').join('');
+  const cs = document.getElementById('ctryStatus');
+  cs.textContent = c.status; cs.className = 'chip ' + statusClass(c.status);
+  document.getElementById('gateSw').setAttribute('aria-checked', state.meta.agreed ? 'true' : 'false');
+  document.getElementById('gateVal').textContent = state.meta.agreed ? 'Agreed · start ' + (fmtDate(state.meta.startDate) || 'TBC') : 'Not agreed';
+  const gd = document.getElementById('gateDate'); gd.hidden = !state.meta.agreed; gd.value = state.meta.startDate || '';
+  document.getElementById('whoami').innerHTML = meM ? avatar(meM.name, true) + esc(meM.name) : 'Set who you are';
+  document.getElementById('signOutBtn').hidden = !session;
+
+  const cur = curStage();
+  document.getElementById('rail').innerHTML = STAGES.map((s, i) =>
+    '<div class="st ' + (i === cur ? 'now' : (cur > -1 && i < cur ? 'past' : '')) + '"><span class="n">' + (i < 3 ? 'Pilot · ' + (i + 1) : 'After') + '</span>'
+    + '<span class="t">' + esc(s.t) + '</span><span class="d">' + esc(stageWhen(s)) + '</span></div>').join('');
+
+  /* 01 idea */
+  document.getElementById('s-idea').innerHTML =
+    '<div class="lead" contenteditable="true" data-edit="idea">' + rich(state.idea) + '</div>' + noteBlock('idea');
+
+  /* 02 flow */
+  document.getElementById('s-flow').innerHTML = '<div class="flow">'
+    + state.flow.map((f, i) => '<div class="fs"><span class="n">' + String(i + 1).padStart(2, '0') + '</span>'
+      + '<h3 contenteditable="true" data-edit="flow.' + i + '.t">' + esc(f.t) + '</h3>'
+      + '<span class="d" contenteditable="true" data-tpl="1" title="{country} and {payout} follow the country picked above" data-edit="flow.' + i + '.d">' + rich(fill(f.d)) + '</span></div>').join('')
+    + '</div>' + noteBlock('flow');
+
+  /* 03 sources */
+  document.getElementById('s-sources').innerHTML = bulletList(state.sources, 'sources', 'source') + noteBlock('sources');
+
+  /* 04 pilot */
+  document.getElementById('pilotSub').textContent = c.name + ' · ' + c.status.toLowerCase();
+  document.getElementById('s-pilot').innerHTML = '<div class="fields pilotf" style="margin-top:12px">'
+    + '<div class="f"><span class="k">Country</span><span class="v txt">' + esc(c.name) + '</span></div>'
+    + state.pilot.map((f, i) => '<div class="f"><span class="k" contenteditable="true" data-edit="pilot.' + i + '.k">' + esc(f.k) + '</span>'
+      + '<span class="v txt" contenteditable="true" data-edit="pilot.' + i + '.v">' + esc(f.v) + '</span></div>').join('')
+    + '</div><div class="out"><b>Note</b><span contenteditable="true" data-edit="pilotNote">' + rich(state.pilotNote) + '</span></div>'
+    + noteBlock('pilot');
+
+  /* 05–06 */
+  document.getElementById('s-validate').innerHTML = bulletList(state.validate, 'validate', 'check') + noteBlock('validate');
+  document.getElementById('s-community').innerHTML = bulletList(state.community, 'community', 'point') + noteBlock('community');
+
+  /* 07 price */
+  document.getElementById('s-price').innerHTML = '<div class="price">'
+    + '<span class="amt" contenteditable="true" data-edit="price.amt">' + esc(state.price.amt) + '</span>'
+    + '<span class="unit" contenteditable="true" data-edit="price.unit">' + esc(state.price.unit) + '</span></div>'
+    + bulletList(state.priceNotes, 'priceNotes', 'line') + noteBlock('price');
+
+  /* 08 next steps */
+  const done = state.next.filter(t => t.done).length;
+  document.getElementById('nextSub').textContent = done + ' of ' + state.next.length + ' done';
+  document.getElementById('s-next').innerHTML = '<div class="blist">'
+    + state.next.map((t, i) => taskRow(t, 'next.' + i)).join('') + '</div>'
+    + '<button class="add" data-act="addTask">+ step</button>';
+
+  /* 09 decisions */
+  document.getElementById('s-decisions').innerHTML = state.decisions.map((d, i) =>
+    '<div class="dec ' + (d.resolved ? 'res' : '') + '"><div class="dec-h">'
+    + '<span class="dec-q" contenteditable="true" data-edit="decisions.' + i + '.q">' + esc(d.q) + '</span>'
+    + '<button class="chip ' + (d.resolved ? 's-done' : '') + '" data-act="resolve" data-path="decisions.' + i + '">' + (d.resolved ? 'Decided' : 'Open') + '</button>'
+    + '<button class="del" data-act="delItem" data-path="decisions.' + i + '" aria-label="Delete">×</button></div>'
+    + '<div class="note" contenteditable="true" data-ph="What we decided…" data-edit="decisions.' + i + '.note">' + rich(d.note) + '</div>'
+    + '</div>').join('') + '<button class="add" data-act="addDecision">+ decision</button>';
+
+  /* 10 countries */
+  document.getElementById('s-countries').innerHTML = '<div class="tw ctry-tbl"><table><thead><tr>'
+    + '<th style="width:22%">Country</th><th style="width:20%">Status</th><th style="width:20%">Mobile-money payout</th><th>Notes</th><th style="width:4%"></th></tr></thead><tbody>'
+    + state.countries.map((x, i) => '<tr>'
+      + '<td contenteditable="true" data-edit="countries.' + i + '.name">' + esc(x.name) + '</td>'
+      + '<td><button class="chip ' + statusClass(x.status) + '" data-act="ctryStatus" data-i="' + i + '">' + esc(x.status) + '</button></td>'
+      + '<td contenteditable="true" data-edit="countries.' + i + '.payout">' + esc(x.payout) + '</td>'
+      + '<td contenteditable="true" data-edit="countries.' + i + '.note">' + rich(x.note) + '</td>'
+      + '<td>' + (state.countries.length > 1 ? '<button class="del" style="opacity:1" data-act="delCountry" data-i="' + i + '" aria-label="Remove">×</button>' : '') + '</td></tr>').join('')
+    + '</tbody></table></div><button class="add" data-act="addCountry">+ country</button>';
+
+  /* 11 team */
+  document.getElementById('s-team').innerHTML = '<div class="team">'
+    + members().map((m, i) => '<div class="member">' + avatar(m.name)
+      + '<span class="nm" contenteditable="true" data-edit="members.' + i + '.name">' + esc(m.name) + '</span>'
+      + '<span class="tag">@' + esc(handleOf(m.name)) + '</span>'
+      + (meM && meM.id === m.id ? '<span class="isme">This is you</span>'
+        : (session ? '' : '<button class="setme" data-act="setMe" data-id="' + m.id + '">This is me</button>'))
+      + '</div>').join('') + '</div>';
+
+  /* 12 activity */
+  document.getElementById('s-activity').innerHTML = state.activity.length
+    ? state.activity.map(a => '<div class="act">' + avatar(a.who, true) + '<span class="w">' + esc(a.who) + '</span><span>' + esc(a.what) + '</span>'
+      + '<span style="margin-left:auto">' + new Date(a.t).toLocaleString([], { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) + '</span></div>').join('')
+    : '<div class="act">Nothing yet.</div>';
+}
+
+/* ---------------- events ---------------- */
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[data-act]');
+  if (!btn) return;
+  const act = btn.dataset.act, path = btn.dataset.path;
+  if (act === 'toggle') {
+    const t = getAt(path); t.done = !t.done; t.status = t.done ? 'Done' : 'To do';
+    touch((t.done ? 'ticked ' : 'unticked ') + '“' + t.text.slice(0, 46) + '”');
+  } else if (act === 'owner') {
+    const t = getAt(path), cyc = ownerCycle(), i = cyc.indexOf(t.owner);
+    t.owner = cyc[(i < 0 ? 0 : i + 1) % cyc.length]; touch('assigned “' + t.text.slice(0, 40) + '” to ' + t.owner);
+  } else if (act === 'status') {
+    const t = getAt(path); t.status = STATUSES[(STATUSES.indexOf(t.status) + 1) % STATUSES.length]; t.done = t.status === 'Done';
+    touch('set “' + t.text.slice(0, 40) + '” to ' + t.status);
+  } else if (act === 'delItem') {
+    if (!confirm('Delete this item?')) return; removeAt(path); touch('deleted an item');
+  } else if (act === 'addItem') {
+    getAt(path).push(L('New item')); touch('added an item');
+  } else if (act === 'addTask') {
+    state.next.push(T('New step')); touch('added a step');
+  } else if (act === 'addDecision') {
+    state.decisions.push({ id: uid(), q: 'New decision', note: '', resolved: false }); touch('added a decision');
+  } else if (act === 'resolve') {
+    const d = getAt(path); d.resolved = !d.resolved; touch((d.resolved ? 'decided ' : 'reopened ') + '“' + d.q.slice(0, 46) + '”');
+  } else if (act === 'ctryStatus') {
+    const x = state.countries[Number(btn.dataset.i)];
+    x.status = CTRY_STATUSES[(CTRY_STATUSES.indexOf(x.status) + 1) % CTRY_STATUSES.length]; touch('set ' + x.name + ' to ' + x.status);
+  } else if (act === 'addCountry') {
+    const name = prompt('Country'); if (!name) return;
+    const payout = prompt('Mobile-money payout used there (e.g. MTN MoMo, Airtel Money)', 'Mobile money') || 'Mobile money';
+    state.countries.push({ id: uid(), name: name.trim(), status: 'Later', payout: payout.trim(), note: '' }); touch('added ' + name.trim());
+  } else if (act === 'delCountry') {
+    const i = Number(btn.dataset.i), x = state.countries[i];
+    if (!confirm('Remove ' + x.name + '?')) return;
+    state.countries.splice(i, 1); if (state.country >= state.countries.length) state.country = 0; touch('removed ' + x.name);
+  } else if (act === 'setMe') {
+    localStorage.setItem('ccx_me_id', btn.dataset.id); const m = members().find(x => x.id === btn.dataset.id); me = m ? m.name : '';
+  } else if (act === 'mention') {
+    const names = members().map(m => m.name), pick = prompt('Tag who?\n\n' + names.join(', '), names[0]); if (!pick) return;
+    const m = memberByName(pick); if (!m) { alert('No team member called ' + pick); return; }
+    const cur = getAt(path) || ''; setAt(path, (cur ? cur.replace(/\s+$/, '') + ' ' : '') + '@' + handleOf(m.name) + ' ');
+    touch('tagged ' + m.name);
+  } else return;
+  render();
+});
+
+/* templated text shows the raw {country}/{payout} tokens while being edited */
+document.addEventListener('focusin', e => {
+  const el = e.target;
+  if (!el.dataset || !el.dataset.edit) return;
+  editing = true;
+  if (el.dataset.tpl) el.textContent = getAt(el.dataset.edit) || '';
+});
+document.addEventListener('blur', e => {
+  const el = e.target;
+  if (!el.dataset || !el.dataset.edit) return;
+  editing = false;
+  if (!el.isConnected) { if (pendingRender) render(); return; }
+  const val = el.textContent.trim();
+  if ((getAt(el.dataset.edit) || '') !== val) {
+    setAt(el.dataset.edit, val);
+    const tagged = mentionsIn(val);
+    touch(tagged.length ? 'tagged ' + tagged.map(id => (members().find(m => m.id === id) || {}).name).join(', ') : 'edited text');
+  }
+  render();
+}, true);
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.dataset && e.target.dataset.edit && !e.target.classList.contains('note') && !e.target.classList.contains('lead')) {
+    e.preventDefault(); e.target.blur();
+  }
+});
+
+document.getElementById('ctrySel').addEventListener('change', e => {
+  state.country = Number(e.target.value); touch('switched the pilot country to ' + curCountry().name); render();
+});
+document.getElementById('ctryStatus').addEventListener('click', () => {
+  const x = curCountry(); x.status = CTRY_STATUSES[(CTRY_STATUSES.indexOf(x.status) + 1) % CTRY_STATUSES.length];
+  touch('set ' + x.name + ' to ' + x.status); render();
+});
+document.getElementById('gateSw').addEventListener('click', () => {
+  state.meta.agreed = !state.meta.agreed;
+  if (state.meta.agreed && !state.meta.startDate) state.meta.startDate = todayISO();
+  touch(state.meta.agreed ? 'marked the pilot agreed' : 'reopened the pilot'); render();
+});
+document.getElementById('gateDate').addEventListener('change', e => { state.meta.startDate = e.target.value; touch('set the start date'); render(); });
+
+function paintThemeBtn() {
+  const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.getElementById('themeBtn').innerHTML = '<span class="g">' + (dark ? '☀' : '☾') + '</span>' + (dark ? 'Light' : 'Dark');
+}
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  try { localStorage.setItem('ccx_theme', next); } catch (e) {}
+  paintThemeBtn();
+});
+paintThemeBtn();
+
+document.getElementById('whoami').addEventListener('click', () => {
+  if (session) { alert('Signed in as ' + session.user.email + '. Sign out to switch.'); return; }
+  const names = members().map(m => m.name), cur = meMember();
+  const v = prompt('Who are you?\n\n' + names.join(', '), cur ? cur.name : names[0]); if (!v) return;
+  const m = memberByName(v); if (!m) { alert('Pick one of: ' + names.join(', ')); return; }
+  localStorage.setItem('ccx_me_id', m.id); me = m.name; render();
+});
+document.getElementById('signOutBtn').addEventListener('click', async () => {
+  try { if (sb) await sb.auth.signOut(); } catch (e) {}
+  session = null; location.replace(location.pathname);
+});
+document.getElementById('exportBtn').addEventListener('click', () => {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' }));
+  a.download = 'ccx-pilot.json'; a.click();
+});
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if (!confirm('Reset everything to the original proposal?')) return;
+  state = defaultState(); migrate(); touch('reset the proposal'); render();
+});
+
+/* ---------------- auth ---------------- */
+const gateScreen = document.getElementById('gateScreen'), loginErr = document.getElementById('loginErr'), loginBtn = document.getElementById('loginBtn');
+function showLogin(msg) { gateScreen.hidden = false; document.getElementById('loginAlt').textContent = msg || ''; document.getElementById('email').focus(); }
+document.getElementById('loginForm').addEventListener('submit', async e => {
+  e.preventDefault(); if (!sb) return;
+  loginErr.textContent = ''; loginBtn.disabled = true; loginBtn.textContent = 'Signing in…';
+  const { data, error } = await sb.auth.signInWithPassword({ email: document.getElementById('email').value.trim(), password: document.getElementById('password').value });
+  loginBtn.disabled = false; loginBtn.textContent = 'Sign in';
+  if (error) { loginErr.textContent = error.message || 'That did not work.'; return; }
+  session = data.session; document.getElementById('password').value = ''; gateScreen.hidden = true;
+  await startApp();
+});
+
+async function startApp() {
+  await initStore();
+  if (migrate()) { me = (meMember() || {}).name || me; touch('updated the proposal for Nigeria'); }
+  const m0 = meMember(); me = m0 ? m0.name : '';
+  if (session && !m0) alert('Signed in as ' + session.user.email + ', but that address is not in the ACCOUNTS list in the page source.');
+  render();
+}
+async function boot() {
+  if (AUTH_ON) {
+    if (!window.supabase) { showLogin(''); loginErr.textContent = 'Could not load the sign-in library. Check your connection and reload.'; loginBtn.disabled = true; return; }
+    sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const { data } = await sb.auth.getSession();
+    session = data ? data.session : null;
+    let had = !!session, reloading = false;
+    sb.auth.onAuthStateChange((ev, s) => { session = s; if (s) had = true; if (ev === 'SIGNED_OUT' && had && !reloading) { reloading = true; location.reload(); } });
+    if (!session) { showLogin(''); return; }
+    gateScreen.hidden = true;
+  }
+  await startApp();
+}
+boot();
 </script>
+</body>
+</html>
